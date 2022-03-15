@@ -5,13 +5,19 @@
 
 import phantom.app as phantom
 from phantom.action_result import ActionResult
+
+from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
+                                    DS_BP_SUBTYPE, DS_DL_SUBTYPE,
+                                    DS_GET_INTELLIGENCE_INCIDENT_SUCCESS,
+                                    DS_INFR_SUBTYPE, DS_PS_SUBTYPE,
+                                    DS_SMC_SUBTYPE, INTEL_INCIDENT_ID_KEY,
+                                    SERVICE_ERR_MSG)
+from dsapi.service.intelligence_incident_service import \
+    IntelligenceIncidentService
+from exception_handling_functions import ExceptionHandling
+
 # from datetime import date, timedelta
 # from unidecode import unidecode
-
-from digital_shadows_consts import *
-
-from dsapi.service.intelligence_incident_service import IntelligenceIncidentService
-from exception_handling_functions import ExceptionHandling
 
 
 class DSIntelligenceIncidentsConnector(object):
@@ -71,7 +77,8 @@ class DSIntelligenceIncidentsConnector(object):
                         'description': unidecode(intelligence_incident.payload['description']),
                         'entitysummary': {
                             'source': intelligence_incident.payload['entitySummary']['source'],
-                            'summarytext': intelligence_incident.payload['entitySummary']['summarytext'] if 'summarytext' in intelligence_incident.payload['entitySummary'] else '',
+                            'summarytext': intelligence_incident.payload['entitySummary']['summarytext']
+                            if 'summarytext' in intelligence_incident.payload['entitySummary'] else '',
                             'domain': intelligence_incident.payload['entitySummary']['domain'],
                             'sourceDate': intelligence_incident.payload['entitySummary']['sourceDate'],
                             'type': intelligence_incident.payload['entitySummary']['type']
@@ -102,7 +109,10 @@ class DSIntelligenceIncidentsConnector(object):
             return action_result.get_status()
 
         try:
-            intelligence_incident_ioc_pages = intelligence_incident_service.find_intel_incident_ioc_by_id(intel_incident_id=intel_incident_id, view=intelligence_incident_view)
+            intelligence_incident_ioc_pages = intelligence_incident_service.find_intel_incident_ioc_by_id(
+                intel_incident_id=intel_incident_id,
+                view=intelligence_incident_view
+            )
             intelligence_incident_ioc_total = len(intelligence_incident_ioc_pages)
             self._connector.save_progress("II IoC Total: {}".format(intelligence_incident_ioc_total))
         except StopIteration:
@@ -124,6 +134,9 @@ class DSIntelligenceIncidentsConnector(object):
                     action_result.add_data(intelligence_incident_ioc.payload)
 
             action_result.set_status(phantom.APP_SUCCESS, DS_GET_INTELLIGENCE_INCIDENT_SUCCESS)
+        else:
+            action_result.set_status(phantom.APP_SUCCESS, "Returned empty response from Searchlight")
+
         return action_result.get_status()
 
     def get_intelligence_incident(self, param):
@@ -138,15 +151,15 @@ class DSIntelligenceIncidentsConnector(object):
 
             for inc_type in param_incident_types:
                 if inc_type == "DATA_LEAKAGE":
-                    incident_types.append({'type': 'DATA_LEAKAGE', 'subTypes': DS_DL_SUBTYPE })
+                    incident_types.append({'type': 'DATA_LEAKAGE', 'subTypes': DS_DL_SUBTYPE})
                 if inc_type == "BRAND_PROTECTION":
-                    incident_types.append({'type': 'BRAND_PROTECTION', 'subTypes': DS_BP_SUBTYPE })
+                    incident_types.append({'type': 'BRAND_PROTECTION', 'subTypes': DS_BP_SUBTYPE})
                 if inc_type == "INFRASTRUCTURE":
-                    incident_types.append({'type': 'INFRASTRUCTURE', 'subTypes': DS_INFR_SUBTYPE })
+                    incident_types.append({'type': 'INFRASTRUCTURE', 'subTypes': DS_INFR_SUBTYPE})
                 if inc_type == "PHYSICAL_SECURITY":
-                    incident_types.append({'type': 'PHYSICAL_SECURITY', 'subTypes': DS_PS_SUBTYPE })
+                    incident_types.append({'type': 'PHYSICAL_SECURITY', 'subTypes': DS_PS_SUBTYPE})
                 if inc_type == "SOCIAL_MEDIA_COMPLIANCE":
-                    incident_types.append({'type': 'SOCIAL_MEDIA_COMPLIANCE', 'subTypes': DS_SMC_SUBTYPE })
+                    incident_types.append({'type': 'SOCIAL_MEDIA_COMPLIANCE', 'subTypes': DS_SMC_SUBTYPE})
                 if inc_type == "CYBER_THREAT":
                     incident_types.append({'type': 'CYBER_THREAT'})
         else:
@@ -154,7 +167,11 @@ class DSIntelligenceIncidentsConnector(object):
 
         try:
             intelligence_incident_service = IntelligenceIncidentService(self._ds_api_key, self._ds_api_secret_key)
-            intelligence_incident_view = IntelligenceIncidentService.intelligence_incidents_view(date_range=date_ranges, date_range_field='published', types=incident_types)
+            intelligence_incident_view = IntelligenceIncidentService.intelligence_incidents_view(
+                date_range=date_ranges,
+                date_range_field='published',
+                types=incident_types
+            )
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
             return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))

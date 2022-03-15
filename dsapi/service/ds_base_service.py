@@ -3,14 +3,12 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
+import base64
 import json
 import time
-import base64
-
 from functools import wraps
 
-from ..config import ds_api_host, ds_api_base
-
+from ..config.config import ds_api_base, ds_api_host
 from .ds_abstract_service import DSAbstractService
 
 
@@ -69,14 +67,19 @@ class DSBaseService(DSAbstractService):
         """
         url = '{}{}'.format(self._url_base, path)
         headers = self._headers() if headers is None else headers
-        
+
         response, content = super(DSBaseService, self)._request(url,
                                                                 method=method,
                                                                 body=str(body).replace("'", '"'),
                                                                 headers=headers)
+
         if int(response['status']) in (200, 204):
             if content != "":
-                res_text = json.loads(content)
+                try:
+                    res_text = json.loads(content)
+                except json.decoder.JSONDecodeError:
+                    return {'status': response['status'],
+                            'message': 'SUCCESS'}
             else:
                 res_text = ""
             post_response = {

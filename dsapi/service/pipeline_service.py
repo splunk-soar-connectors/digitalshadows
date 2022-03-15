@@ -3,8 +3,8 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
-from .ds_base_service import DSBaseService
 from ..model.pipeline import Pipeline
+from .ds_base_service import DSBaseService
 
 
 class PipelineRange(object):
@@ -23,10 +23,10 @@ class PipelineService(DSBaseService):
     def get(self, pipeline_view):
         """
         Get Pipeline data from Digital Shadows API.
-        
+
         :type pipeline_view: tuple
         :param pipeline_view: (PipelineView, view)
-        :return: Pipeline 
+        :return: Pipeline
         """
         pipeline_range, view = pipeline_view
         content = self._request('{}/pipeline'.format(self._api_base),

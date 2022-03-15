@@ -6,11 +6,11 @@
 import phantom.app as phantom
 from phantom.action_result import ActionResult
 
-
-from digital_shadows_consts import DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG
-from digital_shadows_consts import DS_LOOKUP_USERNAME_SUCCESS, DS_LOOKUP_USERNAME_NOT_FOUND
-
-from dsapi.service.data_breach_username_service import DataBreachUsernameService
+from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
+                                    DS_LOOKUP_USERNAME_NOT_FOUND,
+                                    DS_LOOKUP_USERNAME_SUCCESS)
+from dsapi.service.data_breach_username_service import \
+    DataBreachUsernameService
 
 
 class DSLookupUsernameConnector(object):
