@@ -3,24 +3,25 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
-from urllib.parse import urlparse
+import json
 from datetime import datetime
-from unidecode import unidecode
-# import time
+from urllib.parse import urlparse
 
 import phantom.app as phantom
 from phantom.action_result import ActionResult
+from unidecode import unidecode
 
-from digital_shadows_consts import *
-
-# from dsapi.service.data_breach_service import DataBreachService
+from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
+                                    DS_BP_SUBTYPE, DS_DL_SUBTYPE,
+                                    DS_INFR_SUBTYPE, DS_POLL_INCIDENT_COMPLETE,
+                                    DS_PS_SUBTYPE, DS_SMC_SUBTYPE,
+                                    HISTORY_DAYS_INTERVAL_KEY, SERVICE_ERR_MSG)
+from dsapi.config.config import ds_api_host
 from dsapi.service.data_breach_record_service import DataBreachRecordService
 from dsapi.service.incident_service import IncidentService
-from dsapi.service.intelligence_incident_service import IntelligenceIncidentService
+from dsapi.service.intelligence_incident_service import \
+    IntelligenceIncidentService
 from exception_handling_functions import ExceptionHandling
-
-from dsapi.config import ds_api_host
-import json
 
 
 class DSOnPollConnector(object):
@@ -58,22 +59,26 @@ class DSOnPollConnector(object):
         else:
             self._connector.save_progress("Start creating incident")
             # Validate 'history_days_interval' configuration parameter
-            ret_val, self._history_days_interval = self._handle_exception_object.validate_integer(action_result, self._history_days_interval, HISTORY_DAYS_INTERVAL_KEY)
+            ret_val, self._history_days_interval = self._handle_exception_object.validate_integer(
+                action_result,
+                self._history_days_interval,
+                HISTORY_DAYS_INTERVAL_KEY
+            )
             if phantom.is_fail(ret_val):
                 return action_result.get_status()
             date_range = "P{}D".format(self._history_days_interval)
 
             incident_types = []
             if self._inc_typ_data_leakage:
-                incident_types.append({'type': 'DATA_LEAKAGE', 'subTypes': DS_DL_SUBTYPE })
+                incident_types.append({'type': 'DATA_LEAKAGE', 'subTypes': DS_DL_SUBTYPE})
             if self._inc_typ_brand_protection:
-                incident_types.append({'type': 'BRAND_PROTECTION', 'subTypes': DS_BP_SUBTYPE })
+                incident_types.append({'type': 'BRAND_PROTECTION', 'subTypes': DS_BP_SUBTYPE})
             if self._inc_typ_infrastructure:
-                incident_types.append({'type': 'INFRASTRUCTURE', 'subTypes': DS_INFR_SUBTYPE })
+                incident_types.append({'type': 'INFRASTRUCTURE', 'subTypes': DS_INFR_SUBTYPE})
             if self._inc_typ_physical_security:
-                incident_types.append({'type': 'PHYSICAL_SECURITY', 'subTypes': DS_PS_SUBTYPE })
+                incident_types.append({'type': 'PHYSICAL_SECURITY', 'subTypes': DS_PS_SUBTYPE})
             if self._inc_typ_social_media_compliance:
-                incident_types.append({'type': 'SOCIAL_MEDIA_COMPLIANCE', 'subTypes': DS_SMC_SUBTYPE })
+                incident_types.append({'type': 'SOCIAL_MEDIA_COMPLIANCE', 'subTypes': DS_SMC_SUBTYPE})
             if self._inc_typ_cyber_threat:
                 incident_types.append({'type': 'CYBER_THREAT'})
 
@@ -81,7 +86,12 @@ class DSOnPollConnector(object):
                 try:
                     incident_service = IncidentService(self._ds_api_key, self._ds_api_secret_key)
 
-                    incident_view = IncidentService.incidents_view(date_range=date_range, date_range_field='published', statuses=['READ', 'UNREAD'], types=incident_types)
+                    incident_view = IncidentService.incidents_view(
+                        date_range=date_range,
+                        date_range_field='published',
+                        statuses=['READ', 'UNREAD'],
+                        types=incident_types
+                    )
                     self._connector.save_progress("incident req view: {}".format(json.dumps(incident_view, ensure_ascii=False)))
                 except Exception as e:
                     error_message = self._handle_exception_object.get_error_message_from_exception(e)
@@ -112,16 +122,21 @@ class DSOnPollConnector(object):
 
                 if j != incident_total:
                     action_result.set_status(phantom.APP_ERROR,
-                                         status_message='Did not receive all the incident from Digital Shadows')
+                                                status_message='Did not receive all the incident from Digital Shadows')
                 else:
                     action_result.set_status(phantom.APP_SUCCESS)
 
             if self._global_incident:
                 try:
                     intelligence_incident_service = IntelligenceIncidentService(self._ds_api_key, self._ds_api_secret_key)
-                    intelligence_incident_view = IntelligenceIncidentService.intelligence_incidents_view(date_range=date_range,
-                                                                                  date_range_field='published', types=incident_types)
-                    self._connector.save_progress('intelligence_incident_view: {}'.format(json.dumps(intelligence_incident_view, ensure_ascii=False)))
+                    intelligence_incident_view = IntelligenceIncidentService.intelligence_incidents_view(
+                        date_range=date_range,
+                        date_range_field='published',
+                        types=incident_types
+                    )
+                    self._connector.save_progress('intelligence_incident_view: {}'.format(
+                        json.dumps(intelligence_incident_view, ensure_ascii=False))
+                    )
                 except Exception as e:
                     error_message = self._handle_exception_object.get_error_message_from_exception(e)
                     return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
@@ -143,7 +158,13 @@ class DSOnPollConnector(object):
                         status, message = self._save_intel_incident(intelligence_incident)
                         if status == phantom.APP_SUCCESS:
                             k += 1
-                            self._connector.save_progress(DS_POLL_INCIDENT_COMPLETE.format(intelligence_incident.id, k, intelligence_incident_total))
+                            self._connector.save_progress(
+                                DS_POLL_INCIDENT_COMPLETE.format(
+                                    intelligence_incident.id,
+                                    k,
+                                    intelligence_incident_total
+                                )
+                            )
                         else:
                             self._connector.error_print("Did not ingest intel-incident {}".format(intelligence_incident.id))
                             action_result.set_status(phantom.APP_ERROR, message)
@@ -152,7 +173,7 @@ class DSOnPollConnector(object):
 
                 if k != intelligence_incident_total:
                     action_result.set_status(phantom.APP_ERROR,
-                                         status_message='Did not receive all the intelligence incident from Digital Shadows')
+                                            status_message='Did not receive all the intelligence incident from Digital Shadows')
                 else:
                     action_result.set_status(phantom.APP_SUCCESS)
 
@@ -248,7 +269,10 @@ class DSOnPollConnector(object):
         container = dict()
         # self._connector.save_progress(" print container: " + str(container))
         container['label'] = self._container_label
-        container['name'] = '{} - {}'.format(intelligence_incident.payload['type'].title().replace('_', ' '), unidecode(intelligence_incident.payload['title']))
+        container['name'] = '{} - {}'.format(
+            intelligence_incident.payload['type'].title().replace('_', ' '),
+            unidecode(intelligence_incident.payload['title'])
+        )
         intel_incident_desc = unidecode(intelligence_incident.payload['title'])
         # intel_incident_desc = intel_incident_desc.replace( u'\u201c', u'"').replace( u'\u201d', u'"')
         container['description'] = '{}'.format(intel_incident_desc)
@@ -256,7 +280,9 @@ class DSOnPollConnector(object):
         container['custom_fields']['IncidentType'] = str(intelligence_incident.payload['type'])
         if 'subType' in intelligence_incident.payload:
             container['custom_fields']['IncidentSubType'] = str(intelligence_incident.payload['subType'])
-        container['custom_fields']['IncidentURL'] = 'https://portal-digitalshadows.com/client/intelligence/incident/{}'.format(intelligence_incident.payload['id'])
+        container['custom_fields']['IncidentURL'] = 'https://portal-digitalshadows.com/client/intelligence/incident/{}'.format(
+            intelligence_incident.payload['id']
+        )
         container['severity'] = self._ds_to_phantom_severity_transform(intelligence_incident.payload['severity'])
         container['source_data_identifier'] = intelligence_incident.id
         container['start_time'] = intelligence_incident.payload['published']
