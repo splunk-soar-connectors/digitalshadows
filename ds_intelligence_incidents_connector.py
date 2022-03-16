@@ -16,9 +16,6 @@ from dsapi.service.intelligence_incident_service import \
     IntelligenceIncidentService
 from exception_handling_functions import ExceptionHandling
 
-# from datetime import date, timedelta
-# from unidecode import unidecode
-
 
 class DSIntelligenceIncidentsConnector(object):
 

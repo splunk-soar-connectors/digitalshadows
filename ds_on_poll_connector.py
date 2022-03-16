@@ -4,7 +4,6 @@
 #
 
 import json
-# import time
 from datetime import datetime
 from urllib.parse import urlparse
 
@@ -18,7 +17,6 @@ from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
                                     DS_PS_SUBTYPE, DS_SMC_SUBTYPE,
                                     HISTORY_DAYS_INTERVAL_KEY, SERVICE_ERR_MSG)
 from dsapi.config.config import ds_api_host
-# from dsapi.service.data_breach_service import DataBreachService
 from dsapi.service.data_breach_record_service import DataBreachRecordService
 from dsapi.service.incident_service import IncidentService
 from dsapi.service.intelligence_incident_service import \

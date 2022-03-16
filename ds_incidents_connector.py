@@ -14,11 +14,6 @@ from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
 from dsapi.service.incident_service import IncidentService
 from exception_handling_functions import ExceptionHandling
 
-# from datetime import date, timedelta
-
-
-# import json
-
 
 class DSIncidentsConnector(object):
 
