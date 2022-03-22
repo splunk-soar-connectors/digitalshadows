@@ -17,6 +17,20 @@
     "logo_dark": "logo_digital_shadows_dark.svg",
     "license": "Copyright (c) 2020-2021 Digital Shadows Ltd.",
     "pip_dependencies": {
+        "pypi": [
+            {"module": "httplib2"}, {"module": "unidecode"}
+        ],
+        "wheel": [
+            {
+                "module": "certifi",
+                "input_file": "wheels/certifi-2021.5.30-py2.py3-none-any.whl"
+            }
+        ]
+    },
+    "pip3_dependencies": {
+        "pypi": [
+            {"module": "httplib2"}, {"module": "unidecode"}
+        ],
         "wheel": [
             {
                 "module": "certifi",
