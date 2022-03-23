@@ -51,7 +51,7 @@ class DSBaseService(DSAbstractService):
                                                                 method=method,
                                                                 body=str(body).replace("'", '"'),
                                                                 headers=headers)
-        if int(response['status']) == 200:
+        if 200 <= int(response['status']) <= 299:
             return json.loads(content)
         else:
             body = json.loads(content)
