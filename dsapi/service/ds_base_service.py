@@ -46,6 +46,7 @@ class DSBaseService(DSAbstractService):
         """
         url = '{}{}'.format(self._url_base, path)
         headers = self._headers() if headers is None else headers
+        headers["Accept"] = "*/*"
         response, content = super(DSBaseService, self)._request(url,
                                                                 method=method,
                                                                 body=str(body).replace("'", '"'),
@@ -53,7 +54,8 @@ class DSBaseService(DSAbstractService):
         if int(response['status']) == 200:
             return json.loads(content)
         else:
-            raise RuntimeError('{} responded with status code {}'.format(url, response['status']))
+            body = json.loads(content)
+            raise RuntimeError('{} responded with status code {}. {}.'.format(url, response['status'], body['message']))
 
     def _request_post(self, path, method='POST', body=None, headers=None):
         """
