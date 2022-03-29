@@ -3,7 +3,6 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
-import phantom.app as phantom
 
 from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
                                     DS_TEST_CONNECTIVITY_MSG,
@@ -11,6 +10,7 @@ from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
                                     DS_TEST_CONNECTIVITY_MSG_PASS)
 from dsapi.service.ds_base_service import DSBaseService
 from exception_handling_functions import ExceptionHandling
+import phantom.app as phantom
 
 
 class DSTestConnectivityConnector(object):

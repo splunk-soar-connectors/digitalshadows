@@ -3,13 +3,7 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
-import json
 from datetime import datetime
-from urllib.parse import urlparse
-
-import phantom.app as phantom
-from phantom.action_result import ActionResult
-from unidecode import unidecode
 
 from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
                                     DS_BP_SUBTYPE, DS_DL_SUBTYPE,
@@ -22,6 +16,11 @@ from dsapi.service.incident_service import IncidentService
 from dsapi.service.intelligence_incident_service import \
     IntelligenceIncidentService
 from exception_handling_functions import ExceptionHandling
+import json
+import phantom.app as phantom
+from phantom.action_result import ActionResult
+from urllib.parse import urlparse
+from unidecode import unidecode
 
 
 class DSOnPollConnector(object):

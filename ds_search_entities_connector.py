@@ -3,13 +3,12 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
-import phantom.app as phantom
-from phantom.action_result import ActionResult
-
 from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
                                     SERVICE_ERR_MSG)
 from dsapi.service.search_entities_service import SearchEntitiesService
 from exception_handling_functions import ExceptionHandling
+import phantom.app as phantom
+from phantom.action_result import ActionResult
 
 
 class DSSearchEntitiesConnector(object):
