@@ -11,8 +11,7 @@ from phantom.base_connector import BaseConnector
 from digital_shadows_consts import DS_ACTION_NOT_SUPPORTED
 from ds_databreach_connector import DSDataBreachConnector
 from ds_incidents_connector import DSIncidentsConnector
-from ds_intelligence_incidents_connector import \
-    DSIntelligenceIncidentsConnector
+from ds_intelligence_incidents_connector import DSIntelligenceIncidentsConnector
 from ds_on_poll_connector import DSOnPollConnector
 from ds_search_entities_connector import DSSearchEntitiesConnector
 from ds_test_connectivity_connector import DSTestConnectivityConnector

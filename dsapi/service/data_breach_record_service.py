@@ -4,8 +4,7 @@
 #
 
 from ..model.data_breach_record import DataBreachRecord
-from ..model.ds_pagination_grouping_iterator import \
-    DSPaginationGroupingIterator
+from ..model.ds_pagination_grouping_iterator import DSPaginationGroupingIterator
 from ..model.ds_pagination_iterator import DSPaginationIterator
 from .ds_base_service import DSBaseService
 
