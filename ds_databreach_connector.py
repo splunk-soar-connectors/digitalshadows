@@ -3,6 +3,9 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
+import phantom.app as phantom
+from phantom.action_result import ActionResult
+
 from digital_shadows_consts import (BREACH_ID_KEY, BREACH_RECORD_ID_KEY,
                                     DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
                                     DS_GET_BREACH_NOT_FOUND,
@@ -10,8 +13,6 @@ from digital_shadows_consts import (BREACH_ID_KEY, BREACH_RECORD_ID_KEY,
 from dsapi.service.data_breach_record_service import DataBreachRecordService
 from dsapi.service.data_breach_service import DataBreachService
 from exception_handling_functions import ExceptionHandling
-import phantom.app as phantom
-from phantom.action_result import ActionResult
 
 
 class DSDataBreachConnector(object):
