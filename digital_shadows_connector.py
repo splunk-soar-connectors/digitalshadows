@@ -24,6 +24,8 @@ class DigitalShadowsConnector(BaseConnector):
 
     def handle_action(self, param):
         action_id = self.get_action_identifier()
+        self.debug_print("Action was initiated")
+        self.debug_print(f"Parameters: {param}")
         if param:
             self.save_progress("Ingesting handle action in: {}".format(param))
         if action_id == 'test_connectivity':
