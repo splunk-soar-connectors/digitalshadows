@@ -22,23 +22,39 @@ class DigitalShadowsConnector(BaseConnector):
     def __init__(self):
         super(DigitalShadowsConnector, self).__init__()
 
+    def test_connectivity(self):
+        self.save_progress("Testing connectivity")
+        self.save_progress("test")
+        test_connectivity_connector = DSTestConnectivityConnector(self)
+        return test_connectivity_connector.test_connectivity()
+
+    def get_incident_by_id(self, param):
+        incidents_connector = DSIncidentsConnector(self)
+        return incidents_connector.get_incident_by_id(param)
+
+    def get_incident_review_by_id(self, param):
+        incidents_connector = DSIncidentsConnector(self)
+        return incidents_connector.get_incident_review_by_id(param)
+
+    def get_incident_list(self, param):
+        incidents_connector = DSIncidentsConnector(self)
+        return incidents_connector.get_incident_by_id(param)
+
     def handle_action(self, param):
+
+        # get action which is needed to run
         action_id = self.get_action_identifier()
         self.save_progress("Action started")
         if param:
             self.save_progress("Ingesting handle action in: {}".format(param))
         if action_id == 'test_connectivity':
-            test_connectivity_connector = DSTestConnectivityConnector(self)
-            return test_connectivity_connector.test_connectivity()
+            return self.test_connectivity()
         elif action_id == 'get_incident_by_id':
-            incidents_connector = DSIncidentsConnector(self)
-            return incidents_connector.get_incident_by_id(param)
+            return self.get_incident_by_id(param)
         elif action_id == 'get_incident_review_by_id':
-            incidents_connector = DSIncidentsConnector(self)
-            return incidents_connector.get_incident_review_by_id(param)
+            return self.get_incident_review_by_id(param)
         elif action_id == 'get_incident_list':
-            incidents_connector = DSIncidentsConnector(self)
-            return incidents_connector.get_incident_list(param)
+            return self.get_incident_list(param)
         elif action_id == 'post_incident_review':
             incidents_connector = DSIncidentsConnector(self)
             return incidents_connector.post_incident_review(param)
