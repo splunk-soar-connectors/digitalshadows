@@ -18,7 +18,7 @@
     "license": "Copyright (c) 2020-2022 Digital Shadows Ltd.",
     "pip_dependencies": {
         "pypi": [
-            {"module": "httplib2"}, {"module": "unidecode"}
+            {"module": "httplib2"}, {"module": "anyascii"}
         ],
         "wheel": [
             {
@@ -29,7 +29,7 @@
     },
     "pip3_dependencies": {
         "pypi": [
-            {"module": "httplib2"}, {"module": "unidecode"}
+            {"module": "httplib2"}, {"module": "anyascii"}
         ],
         "wheel": [
             {
