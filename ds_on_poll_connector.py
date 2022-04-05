@@ -8,8 +8,8 @@ from datetime import datetime
 from urllib.parse import urlparse
 
 import phantom.app as phantom
-from phantom.action_result import ActionResult
 from anyascii import anyascii
+from phantom.action_result import ActionResult
 
 from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_BP_SUBTYPE, DS_DL_SUBTYPE, DS_INFR_SUBTYPE,
                                     DS_POLL_INCIDENT_COMPLETE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, HISTORY_DAYS_INTERVAL_KEY, SERVICE_ERR_MSG)
