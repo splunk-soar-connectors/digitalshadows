@@ -5,10 +5,11 @@
 
 from datetime import date
 
-from .ds_base_service import DSBaseService
-from .ds_find_service import DSFindService
 from ..model.intelligence_incident import IntelligenceIncident
 from ..model.intelligence_incident_ioc import IntelligenceIncidentIoc
+from .ds_base_service import DSBaseService
+from .ds_find_service import DSFindService
+
 
 class IntelligenceIncidentService(DSFindService):
 
@@ -52,7 +53,7 @@ class IntelligenceIncidentService(DSFindService):
         :param view: Intelligence Incident ID
         :return: Incident Reviews
         """
-        return self._request('/api/intel-incidents/'+str(intel_incident_id))
+        return self._request('/api/intel-incidents/' + str(intel_incident_id))
 
     def find_intel_incident_ioc_by_id(self, intel_incident_id=None, view=None):
         """
@@ -67,14 +68,13 @@ class IntelligenceIncidentService(DSFindService):
 
         return self._read_all_pages('/api/intel-incidents/' + str(intel_incident_id) + '/iocs', view, IntelligenceIncidentIoc)
 
-
     @staticmethod
     @DSBaseService.paginated()
     @DSBaseService.sorted('published')
     def intelligence_incidents_view(since='1970-01-01', until=date.today(), date_range_field='occurred', date_range='P30D',
-                       severities=None, tag_operator='AND', tags=None, types=None,
-                       with_feedback=True, without_feedback=True,
-                       reverse=False, page_size=500, sort_property='occurred', identifier=None):
+                                    severities=None, tag_operator='AND', tags=None, types=None,
+                                    with_feedback=True, without_feedback=True,
+                                    reverse=False, page_size=500, sort_property='occurred', identifier=None):
         return {
             "filter": {
                 "identifier": "" if identifier is None else identifier,

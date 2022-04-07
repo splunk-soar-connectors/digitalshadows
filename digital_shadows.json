@@ -5,7 +5,7 @@
     "type": "information",
     "main_module": "digital_shadows_connector.py",
     "app_version": "2.0.2",
-    "min_phantom_version": "4.9.39220",
+    "min_phantom_version": "5.1.0",
     "python_version": "3",
     "utctime_updated": "2022-01-07T21:19:10.000000Z",
     "product_vendor": "Digital Shadows",
@@ -15,8 +15,22 @@
     "package_name": "phantom_digital_shadows",
     "logo": "logo_digital_shadows.svg",
     "logo_dark": "logo_digital_shadows_dark.svg",
-    "license": "Copyright (c) 2020-2021 Digital Shadows Ltd.",
+    "license": "Copyright (c) 2020-2022 Digital Shadows Ltd.",
     "pip_dependencies": {
+        "pypi": [
+            {"module": "httplib2"}, {"module": "anyascii"}
+        ],
+        "wheel": [
+            {
+                "module": "certifi",
+                "input_file": "wheels/certifi-2021.5.30-py2.py3-none-any.whl"
+            }
+        ]
+    },
+    "pip3_dependencies": {
+        "pypi": [
+            {"module": "httplib2"}, {"module": "anyascii"}
+        ],
         "wheel": [
             {
                 "module": "certifi",

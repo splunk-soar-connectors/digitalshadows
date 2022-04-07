@@ -3,10 +3,9 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
+from ..model.infrastructure_vulnerabilities import InfrastructureVulnerabilities
 from .ds_base_service import DSBaseService
 from .ds_find_service import DSFindService
-
-from ..model.infrastructure_vulnerabilities import InfrastructureVulnerabilities
 
 
 class InfrastructureVulnerabilitiesService(DSFindService):
@@ -47,8 +46,9 @@ class InfrastructureVulnerabilitiesService(DSFindService):
     @staticmethod
     @DSBaseService.paginated(size=500)
     @DSBaseService.sorted('published')
-    def infrastructure_vulnerabilities_view(published='ALL', domain=None, detected='ALL', cveidentifiers=None, markedclosed=False, detectedclosed=False,
-	                     incidenttypes=None, severities=None, alerted=False, reverse=None):
+    def infrastructure_vulnerabilities_view(published='ALL', domain=None, detected='ALL',
+                                            cveidentifiers=None, markedclosed=False, detectedclosed=False,
+                                            incidenttypes=None, severities=None, alerted=False, reverse=None):
         view = {
             'filter': {
                 'published': published,
