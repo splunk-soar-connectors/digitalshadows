@@ -5,7 +5,7 @@
     "type": "information",
     "main_module": "digital_shadows_connector.py",
     "app_version": "2.0.2",
-    "min_phantom_version": "5.1.0",
+    "min_phantom_version": "5.2.0",
     "python_version": "3",
     "utctime_updated": "2022-01-07T21:19:10.000000Z",
     "product_vendor": "Digital Shadows",
@@ -853,13 +853,13 @@
                 {
                     "data_path": "action_result.summary.intelligence_incident_ioc_count",
                     "data_type": "string",
-                    "column_name": "Intelligence Incident IoCs Count",
+                    "column_name": "Intelligence Incident Iocs Count",
                     "column_order": 0
                 },
                 {
                     "data_path": "action_result.summary.intelligence_incident_ioc_found",
                     "data_type": "boolean",
-                    "column_name": "Intelligence Incident IoCs Found",
+                    "column_name": "Intelligence Incident Iocs Found",
                     "example_values": [
                         true,
                         false
