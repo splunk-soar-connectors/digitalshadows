@@ -5,8 +5,8 @@ Third-party Software Attributions:
 
 Library: anyascii
 Version: 0.3.0
-License: ISC
-Copyright 2020-2021 Hunter WB <hunterwb.com>
+License: ISC License
+Copyright (c) 2020-2022, Hunter WB <hunterwb.com>
 
 Library: certifi
 Version: 2021.5.30
