@@ -1,3 +1,1 @@
 **Unreleased**
-* Bug fixes for actions 'get intelligence incident ioc' and 'post breach record review'
-* Added httplib and unicode dependencies
