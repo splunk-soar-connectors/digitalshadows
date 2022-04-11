@@ -6,8 +6,8 @@
 # Must match json configuration object in digital_shadows.json
 
 # API Keys
-DS_API_KEY_CFG = 'ds_api_key'
-DS_API_SECRET_KEY_CFG = 'ds_api_secret_key'
+DS_API_KEY_CFG = 'ds_api_key'  # pragma: allowlist secret
+DS_API_SECRET_KEY_CFG = 'ds_api_secret_key'  # pragma: allowlist secret
 
 # Action not supported message
 DS_ACTION_NOT_SUPPORTED = 'Action {} not supported'

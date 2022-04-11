@@ -5,9 +5,9 @@
 
 from datetime import date
 
+from ..model.incident import Incident
 from .ds_base_service import DSBaseService
 from .ds_find_service import DSFindService
-from ..model.incident import Incident
 
 
 class IncidentService(DSFindService):
@@ -52,7 +52,7 @@ class IncidentService(DSFindService):
         :param view: Incident ID
         :return: Incident data
         """
-        return self._request('/api/incidents/'+str(incident_id))
+        return self._request('/api/incidents/' + str(incident_id))
 
     def find_all_reviews(self, incident_id=None):
         """
@@ -62,7 +62,7 @@ class IncidentService(DSFindService):
         :return: Incident Reviews
         """
 
-        return self._request('/api/incidents/'+str(incident_id)+'/reviews')
+        return self._request('/api/incidents/' + str(incident_id) + '/reviews')
 
     def post_incident_review(self, post_view=None, incident_id=None):
         """
@@ -71,7 +71,7 @@ class IncidentService(DSFindService):
         :param view: Incident ID
         :return: Incident Reviews
         """
-        return self._request_post('/api/incidents/'+str(incident_id)+'/reviews', body=post_view)
+        return self._request_post('/api/incidents/' + str(incident_id) + '/reviews', body=post_view)
 
     @staticmethod
     @DSBaseService.paginated()

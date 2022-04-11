@@ -6,10 +6,10 @@
 import phantom.app as phantom
 from phantom.action_result import ActionResult
 
-from digital_shadows_consts import *
-
-from dsapi.service.data_breach_service import DataBreachService
+from digital_shadows_consts import (BREACH_ID_KEY, BREACH_RECORD_ID_KEY, DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_GET_BREACH_NOT_FOUND,
+                                    DS_GET_BREACH_SUCCESS, SERVICE_ERR_MSG)
 from dsapi.service.data_breach_record_service import DataBreachRecordService
+from dsapi.service.data_breach_service import DataBreachService
 from exception_handling_functions import ExceptionHandling
 
 
@@ -130,8 +130,14 @@ class DSDataBreachConnector(object):
 
         try:
             breach_record_service = DataBreachRecordService(self._ds_api_key, self._ds_api_secret_key)
-            breach_record_view = DataBreachRecordService.data_breach_records_view(published=date_range, domain_names=param_domain_names, username=param_user_name,
-                                                             password=param_password, review_statuses=param_review_statuses, distinction=param_distinction)
+            breach_record_view = DataBreachRecordService.data_breach_records_view(
+                published=date_range,
+                domain_names=param_domain_names,
+                username=param_user_name,
+                password=param_password,
+                review_statuses=param_review_statuses,
+                distinction=param_distinction
+            )
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
             return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
@@ -222,7 +228,8 @@ class DSDataBreachConnector(object):
 
         try:
             breach_record_view = DataBreachRecordService.data_breach_records_view(username=user_name, published=published_date_range,
-                                                                domain_names=domain_names_param, review_statuses=review_statuses_param)
+                                                                                    domain_names=domain_names_param,
+                                                                                    review_statuses=review_statuses_param)
             self._connector.save_progress("Breach record View: {}".format(breach_record_view))
             breach_record_pages = breach_record_service.read_all_records(view=breach_record_view)
         except StopIteration:
@@ -279,7 +286,10 @@ class DSDataBreachConnector(object):
             action_result.update_summary(summary)
             for breach_record_review in breach_record_reviews:
                 action_result.add_data(breach_record_review)
-            action_result.set_status(phantom.APP_SUCCESS, "Digital Shadows breach record reviews fetched for the Breach Record ID: {}".format(breach_record_id))
+            action_result.set_status(
+                phantom.APP_SUCCESS,
+                "Digital Shadows breach record reviews fetched for the Breach Record ID: {}".format(breach_record_id)
+            )
         return action_result.get_status()
 
     def post_breach_record_review(self, param):
@@ -300,6 +310,8 @@ class DSDataBreachConnector(object):
         if phantom.is_fail(ret_val):
             return action_result.get_status()
         try:
+            data = breach_record_service.find_data_breach_record_reviews(breach_record_id)
+            post_data['version'] = max(v['version'] for v in data)
             response = breach_record_service.post_data_breach_record_review(post_data, breach_record_id=breach_record_id)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)

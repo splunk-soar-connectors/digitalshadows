@@ -3,10 +3,9 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
+from ..model.data_breach import DataBreach
 from .ds_base_service import DSBaseService
 from .ds_find_service import DSFindService
-
-from ..model.data_breach import DataBreach
 
 
 class DataBreachService(DSFindService):
@@ -51,7 +50,7 @@ class DataBreachService(DSFindService):
         :param view: Intelligence Incident ID
         :return: Incident Reviews
         """
-        return self._request('/api/data-breach/'+str(breach_id))
+        return self._request('/api/data-breach/' + str(breach_id))
 
     @staticmethod
     @DSBaseService.paginated(size=500)

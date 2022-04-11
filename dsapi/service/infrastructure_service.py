@@ -3,10 +3,9 @@
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
+from ..model.infrastructure import Infrastructure
 from .ds_base_service import DSBaseService
 from .ds_find_service import DSFindService
-
-from ..model.infrastructure import Infrastructure
 
 
 class InfrastructureService(DSFindService):
@@ -48,7 +47,7 @@ class InfrastructureService(DSFindService):
     @DSBaseService.paginated(size=500)
     @DSBaseService.sorted('published')
     def infrastructure_view(detectedopen='ALL', domainname=None, detectedclosed=False, markedclosed=False,
-                         severities=None, alerted=False, reverse=None):
+                            severities=None, alerted=False, reverse=None):
         view = {
             'filter': {
                 'detectedOpen': detectedopen,
