@@ -1,9 +1,19 @@
 Splunk SOAR Digital Shadows
-Copyright (c) 2020-2021 Digital Shadows Ltd.
+Copyright (c) 2020-2022 Digital Shadows Ltd.
 
 Third-party Software Attributions:
+
+Library: anyascii
+Version: 0.3.0
+License: ISC License
+Copyright (c) 2020-2022, Hunter WB <hunterwb.com>
 
 Library: certifi
 Version: 2021.5.30
 License: Mozilla 2.0
 Unspecified Copyright
+
+Library: httplib2
+Version: 0.20.4
+License: MIT
+Copyright 2006 by Joe Gregorio

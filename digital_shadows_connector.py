@@ -22,61 +22,149 @@ class DigitalShadowsConnector(BaseConnector):
     def __init__(self):
         super(DigitalShadowsConnector, self).__init__()
 
+    def test_connectivity(self):
+        self.save_progress("Testing connectivity")
+        self.save_progress("test")
+        test_connectivity_connector = DSTestConnectivityConnector(self)
+        return test_connectivity_connector.test_connectivity()
+
+    def get_incident_by_id(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        incidents_connector = DSIncidentsConnector(self)
+        return incidents_connector.get_incident_by_id(param)
+
+    def get_incident_review_by_id(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        incidents_connector = DSIncidentsConnector(self)
+        return incidents_connector.get_incident_review_by_id(param)
+
+    def get_incident_list(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        incidents_connector = DSIncidentsConnector(self)
+        return incidents_connector.get_incident_by_id(param)
+
+    def post_incident_review(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        incidents_connector = DSIncidentsConnector(self)
+        return incidents_connector.post_incident_review(param)
+
+    def get_intelligence_incident_by_id(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        intelligence_incidents_connector = DSIntelligenceIncidentsConnector(self)
+        return intelligence_incidents_connector.get_intelligence_incident_by_id(param)
+
+    def get_intel_incident_ioc_by_id(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        intelligence_incidents_connector = DSIntelligenceIncidentsConnector(self)
+        return intelligence_incidents_connector.get_intel_incident_ioc_by_id(param)
+
+    def get_intelligence_incident(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        intelligence_incidents_connector = DSIntelligenceIncidentsConnector(self)
+        return intelligence_incidents_connector.get_intelligence_incident(param)
+
+    def get_data_breach(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        databreach_connector = DSDataBreachConnector(self)
+        return databreach_connector.get_data_breach(param)
+
+    def get_data_breach_by_id(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        databreach_connector = DSDataBreachConnector(self)
+        return databreach_connector.get_data_breach_by_id(param)
+
+    def get_data_breach_record(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        databreach_connector = DSDataBreachConnector(self)
+        return databreach_connector.get_data_breach_record(param)
+
+    def get_data_breach_record_by_id(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        databreach_connector = DSDataBreachConnector(self)
+        return databreach_connector.get_data_breach_record_by_id(param)
+
+    def get_data_breach_record_by_username(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        databreach_connector = DSDataBreachConnector(self)
+        return databreach_connector.get_data_breach_record_by_username(param)
+
+    def get_data_breach_record_reviews(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        databreach_connector = DSDataBreachConnector(self)
+        return databreach_connector.get_data_breach_record_reviews(param)
+
+    def post_breach_record_review(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        databreach_connector = DSDataBreachConnector(self)
+        return databreach_connector.post_breach_record_review(param)
+
+    def search_entities(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        search_entities_connector = DSSearchEntitiesConnector(self)
+        return search_entities_connector.search_entities(param)
+
+    def on_poll(self, param):
+        self.save_progress("Entered the function")
+        self.save_progress("processing")
+        on_poll_connector = DSOnPollConnector(self)
+        return on_poll_connector.on_poll(param)
+
     def handle_action(self, param):
+
+        # get action which is needed to run
         action_id = self.get_action_identifier()
+
         if param:
             self.save_progress("Ingesting handle action in: {}".format(param))
         if action_id == 'test_connectivity':
-            test_connectivity_connector = DSTestConnectivityConnector(self)
-            return test_connectivity_connector.test_connectivity()
+            return self.test_connectivity()
         elif action_id == 'get_incident_by_id':
-            incidents_connector = DSIncidentsConnector(self)
-            return incidents_connector.get_incident_by_id(param)
+            return self.get_incident_by_id(param)
         elif action_id == 'get_incident_review_by_id':
-            incidents_connector = DSIncidentsConnector(self)
-            return incidents_connector.get_incident_review_by_id(param)
+            return self.get_incident_review_by_id(param)
         elif action_id == 'get_incident_list':
-            incidents_connector = DSIncidentsConnector(self)
-            return incidents_connector.get_incident_list(param)
+            return self.get_incident_list(param)
         elif action_id == 'post_incident_review':
-            incidents_connector = DSIncidentsConnector(self)
-            return incidents_connector.post_incident_review(param)
+            return self.post_incident_review(param)
         elif action_id == 'get_intelligence_incident_by_id':
-            intelligence_incidents_connector = DSIntelligenceIncidentsConnector(self)
-            return intelligence_incidents_connector.get_intelligence_incident_by_id(param)
+            return self.get_intelligence_incident_by_id(param)
         elif action_id == 'get_intel_incident_ioc_by_id':
-            intelligence_incidents_connector = DSIntelligenceIncidentsConnector(self)
-            return intelligence_incidents_connector.get_intel_incident_ioc_by_id(param)
+            return self.get_intel_incident_ioc_by_id(param)
         elif action_id == 'get_intelligence_incident':
-            intelligence_incidents_connector = DSIntelligenceIncidentsConnector(self)
-            return intelligence_incidents_connector.get_intelligence_incident(param)
+            return self.get_intelligence_incident(param)
         elif action_id == 'get_data_breach':
-            databreach_connector = DSDataBreachConnector(self)
-            return databreach_connector.get_data_breach(param)
+            return self.get_data_breach(param)
         elif action_id == 'get_data_breach_by_id':
-            databreach_connector = DSDataBreachConnector(self)
-            return databreach_connector.get_data_breach_by_id(param)
+            return self.get_data_breach_by_id(param)
         elif action_id == 'get_data_breach_record':
-            databreach_connector = DSDataBreachConnector(self)
-            return databreach_connector.get_data_breach_record(param)
+            return self.get_data_breach_record(param)
         elif action_id == 'get_data_breach_record_by_id':
-            databreach_connector = DSDataBreachConnector(self)
-            return databreach_connector.get_data_breach_record_by_id(param)
+            return self.get_data_breach_record_by_id(param)
         elif action_id == 'get_data_breach_record_by_username':
-            databreach_connector = DSDataBreachConnector(self)
-            return databreach_connector.get_data_breach_record_by_username(param)
+            return self.get_data_breach_record_by_username(param)
         elif action_id == 'get_data_breach_record_reviews':
-            databreach_connector = DSDataBreachConnector(self)
-            return databreach_connector.get_data_breach_record_reviews(param)
+            return self.get_data_breach_record_reviews(param)
         elif action_id == 'post_breach_record_review':
-            databreach_connector = DSDataBreachConnector(self)
-            return databreach_connector.post_breach_record_review(param)
+            return self.post_breach_record_review(param)
         elif action_id == 'search_entities':
-            search_entities_connector = DSSearchEntitiesConnector(self)
-            return search_entities_connector.search_entities(param)
+            return self.search_entities(param)
         elif action_id == 'on_poll':
-            on_poll_connector = DSOnPollConnector(self)
-            return on_poll_connector.on_poll(param)
+            return self.on_poll(param)
         else:
             self.save_progress(DS_ACTION_NOT_SUPPORTED.format(action_id))
             return self.set_status(phantom.APP_ERROR, DS_ACTION_NOT_SUPPORTED.format(action_id))
@@ -88,7 +176,7 @@ if __name__ == '__main__':
 
     if len(sys.argv) < 2:
         print("No test json specified as input")
-        exit(0)
+        sys.exit(0)
 
     with open(sys.argv[1]) as f:
         in_json = f.read()
@@ -100,4 +188,4 @@ if __name__ == '__main__':
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))
 
-    exit(0)
+    sys.exit(0)

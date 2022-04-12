@@ -8,19 +8,15 @@ from datetime import datetime
 from urllib.parse import urlparse
 
 import phantom.app as phantom
+from anyascii import anyascii
 from phantom.action_result import ActionResult
-from unidecode import unidecode
 
-from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG,
-                                    DS_BP_SUBTYPE, DS_DL_SUBTYPE,
-                                    DS_INFR_SUBTYPE, DS_POLL_INCIDENT_COMPLETE,
-                                    DS_PS_SUBTYPE, DS_SMC_SUBTYPE,
-                                    HISTORY_DAYS_INTERVAL_KEY, SERVICE_ERR_MSG)
+from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_BP_SUBTYPE, DS_DL_SUBTYPE, DS_INFR_SUBTYPE,
+                                    DS_POLL_INCIDENT_COMPLETE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, HISTORY_DAYS_INTERVAL_KEY, SERVICE_ERR_MSG)
 from dsapi.config.config import ds_api_host
 from dsapi.service.data_breach_record_service import DataBreachRecordService
 from dsapi.service.incident_service import IncidentService
-from dsapi.service.intelligence_incident_service import \
-    IntelligenceIncidentService
+from dsapi.service.intelligence_incident_service import IntelligenceIncidentService
 from exception_handling_functions import ExceptionHandling
 
 
@@ -271,9 +267,9 @@ class DSOnPollConnector(object):
         container['label'] = self._container_label
         container['name'] = '{} - {}'.format(
             intelligence_incident.payload['type'].title().replace('_', ' '),
-            unidecode(intelligence_incident.payload['title'])
+            anyascii(intelligence_incident.payload['title'])
         )
-        intel_incident_desc = unidecode(intelligence_incident.payload['title'])
+        intel_incident_desc = anyascii(intelligence_incident.payload['title'])
         # intel_incident_desc = intel_incident_desc.replace( u'\u201c', u'"').replace( u'\u201d', u'"')
         container['description'] = '{}'.format(intel_incident_desc)
         container['custom_fields'] = dict()
@@ -375,8 +371,8 @@ class DSOnPollConnector(object):
         # now = datetime.now()
         container = dict()
         container['label'] = self._container_label
-        container['name'] = '{} - {}'.format(incident.payload['type'].title().replace('_', ' '), unidecode(incident.payload['title']))
-        incident_desc = unidecode(incident.payload['title'])
+        container['name'] = '{} - {}'.format(incident.payload['type'].title().replace('_', ' '), anyascii(incident.payload['title']))
+        incident_desc = anyascii(incident.payload['title'])
         container['description'] = '{}'.format(incident_desc)
         container['custom_fields'] = dict()
         container['custom_fields']['IncidentType'] = str(incident.payload['type'])
