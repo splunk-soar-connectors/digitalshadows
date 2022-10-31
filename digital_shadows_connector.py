@@ -44,7 +44,7 @@ class DigitalShadowsConnector(BaseConnector):
         self.save_progress("Entered the function")
         self.save_progress("processing")
         incidents_connector = DSIncidentsConnector(self)
-        return incidents_connector.get_incident_by_id(param)
+        return incidents_connector.get_incident_list(param)
 
     def post_incident_review(self, param):
         self.save_progress("Entered the function")
