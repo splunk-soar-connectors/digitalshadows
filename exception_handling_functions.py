@@ -11,8 +11,11 @@ from digital_shadows_consts import (ERROR_CODE_MESSAGE, ERROR_MESSAGE_UNAVAILABL
 
 class ExceptionHandling:
 
+    def __init__(self, connector):
+        self.obj = connector
+
     def _dump_error_log(self, error, message="Exception occurred."):
-        self.error_print(message, dump_object=error)
+        self.obj.error_print(message, dump_object=error)
 
     def get_error_message_from_exception(self, e):
         """ This method is used to get appropriate error message from the exception.

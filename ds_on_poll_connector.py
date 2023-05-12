@@ -27,7 +27,7 @@ class DSOnPollConnector(object):
         :param connector: DigitalShadowsConnector
         """
         self._connector = connector
-        self._handle_exception_object = ExceptionHandling()
+        self._handle_exception_object = ExceptionHandling(connector)
         config = connector.get_config()
         self._ds_api_key = config[DS_API_KEY_CFG]
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]

@@ -21,7 +21,7 @@ class DSIncidentsConnector(object):
         self._connector = connector
 
         config = connector.get_config()
-        self._handle_exception_object = ExceptionHandling()
+        self._handle_exception_object = ExceptionHandling(connector)
         self._ds_api_key = config[DS_API_KEY_CFG]
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]
 
