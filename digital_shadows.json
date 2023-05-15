@@ -16,6 +16,7 @@
     "logo": "logo_digital_shadows.svg",
     "logo_dark": "logo_digital_shadows_dark.svg",
     "license": "Copyright (c) 2020-2023 Digital Shadows Ltd.",
+    "fips_compliant": false,
     "pip_dependencies": {
         "pypi": [
             {
