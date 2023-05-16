@@ -7,7 +7,7 @@ import phantom.app as phantom
 from phantom.action_result import ActionResult
 
 from digital_shadows_consts import (BREACH_ID_KEY, BREACH_RECORD_ID_KEY, DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_GET_BREACH_NOT_FOUND,
-                                    DS_GET_BREACH_SUCCESS, SERVICE_ERR_MSG)
+                                    DS_GET_BREACH_SUCCESS, SERVICE_ERROR_MESSAGE)
 from dsapi.service.data_breach_record_service import DataBreachRecordService
 from dsapi.service.data_breach_service import DataBreachService
 from exception_handling_functions import ExceptionHandling
@@ -22,7 +22,7 @@ class DSDataBreachConnector(object):
         self._connector = connector
 
         config = connector.get_config()
-        self._handle_exception_object = ExceptionHandling()
+        self._handle_exception_object = ExceptionHandling(connector)
         self._ds_api_key = config[DS_API_KEY_CFG]
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]
 
@@ -33,7 +33,7 @@ class DSDataBreachConnector(object):
             breach_service = DataBreachService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
 
         breach_id = param['breach_id']
         # validate 'breach_id' action parameter
@@ -79,7 +79,7 @@ class DSDataBreachConnector(object):
                                                              severities=param_severities, statuses=param_statuses, username=param_user_name)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         try:
             breach_pages = breach_service.find_all_pages(view=breach_view)
             breach_total = len(breach_pages)
@@ -140,7 +140,7 @@ class DSDataBreachConnector(object):
             )
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         self._connector.save_progress(str(breach_record_view))
         try:
             breach_record_pages = breach_record_service.read_all_records(view=breach_record_view)
@@ -177,7 +177,7 @@ class DSDataBreachConnector(object):
             breach_record_service = DataBreachRecordService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         breach_id = param['breach_id']
         # validate 'breach_id' action parameter
         ret_val, breach_id = self._handle_exception_object.validate_integer(action_result, breach_id, BREACH_ID_KEY)
@@ -219,7 +219,7 @@ class DSDataBreachConnector(object):
             breach_record_service = DataBreachRecordService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
 
         user_name = param['user_name']
         domain_names_param = None if 'domain_names' not in param else param['domain_names'].split(',')
@@ -266,7 +266,7 @@ class DSDataBreachConnector(object):
             breach_record_service = DataBreachRecordService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         breach_record_id = param['breach_record_id']
         # validate 'breach_record_id' action parameter
         ret_val, breach_record_id = self._handle_exception_object.validate_integer(action_result, breach_record_id, BREACH_RECORD_ID_KEY)
@@ -299,7 +299,7 @@ class DSDataBreachConnector(object):
             breach_record_service = DataBreachRecordService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         post_data = {
           'note': param.get('review_note'),
           'status': param.get('review_status')

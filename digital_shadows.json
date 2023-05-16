@@ -4,8 +4,8 @@
     "description": "The Digital Shadows SearchLight App allows users to create flexible and dynamic playbooks that fully harness the capabilities provided by the Digital Shadows SearchLight API",
     "type": "information",
     "main_module": "digital_shadows_connector.py",
-    "app_version": "2.0.2",
-    "min_phantom_version": "5.2.0",
+    "app_version": "2.1.0",
+    "min_phantom_version": "5.3.5",
     "python_version": "3",
     "utctime_updated": "2022-01-07T21:19:10.000000Z",
     "product_vendor": "Digital Shadows",
@@ -15,10 +15,16 @@
     "package_name": "phantom_digital_shadows",
     "logo": "logo_digital_shadows.svg",
     "logo_dark": "logo_digital_shadows_dark.svg",
-    "license": "Copyright (c) 2020-2022 Digital Shadows Ltd.",
+    "license": "Copyright (c) 2020-2023 Digital Shadows Ltd.",
+    "fips_compliant": false,
     "pip_dependencies": {
         "pypi": [
-            {"module": "httplib2"}, {"module": "anyascii"}
+            {
+                "module": "httplib2"
+            },
+            {
+                "module": "anyascii"
+            }
         ],
         "wheel": [
             {
@@ -28,13 +34,22 @@
         ]
     },
     "pip3_dependencies": {
-        "pypi": [
-            {"module": "httplib2"}, {"module": "anyascii"}
-        ],
         "wheel": [
             {
+                "module": "anyascii",
+                "input_file": "wheels/py3/anyascii-0.3.0-py3-none-any.whl"
+            },
+            {
                 "module": "certifi",
-                "input_file": "wheels/certifi-2021.5.30-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
+            },
+            {
+                "module": "httplib2",
+                "input_file": "wheels/py3/httplib2-0.20.4-py3-none-any.whl"
+            },
+            {
+                "module": "pyparsing",
+                "input_file": "wheels/py3/pyparsing-3.0.9-py3-none-any.whl"
             }
         ]
     },
@@ -168,6 +183,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.date_range",
                     "data_type": "string",
                     "column_name": "Date Range",
@@ -204,14 +227,6 @@
                         false
                     ],
                     "column_order": 3
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -260,6 +275,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.incident_id",
                     "data_type": "numeric",
                     "column_name": "Incident ID Queried",
@@ -281,14 +304,6 @@
                         false
                     ],
                     "column_order": 0
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -350,6 +365,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.date_range",
                     "data_type": "string",
                     "column_name": "Incident Date Range",
@@ -386,14 +409,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -442,6 +457,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.incident_id",
                     "data_type": "numeric",
                     "column_name": "Incident ID Queried",
@@ -469,14 +492,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -537,6 +552,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.incident_id",
                     "data_type": "numeric",
                     "column_name": "Incident ID Queried",
@@ -572,14 +595,6 @@
                     "data_type": "string",
                     "column_name": "Incident Review Status",
                     "column_order": 0
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -641,6 +656,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.date_range",
                     "data_type": "string",
                     "column_name": "Incident Date Range",
@@ -677,14 +700,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -733,6 +748,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.intel_incident_id",
                     "data_type": "numeric",
                     "column_name": "Intelligence Incident ID",
@@ -760,14 +783,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -836,6 +851,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.intel_incident_id",
                     "data_type": "numeric",
                     "contains": [
@@ -865,14 +888,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -958,6 +973,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.date_range",
                     "data_type": "string",
                     "column_name": "Published Date Range",
@@ -1014,14 +1037,6 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
                     "data_path": "action_result.message",
                     "data_type": "string"
                 },
@@ -1068,6 +1083,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.breach_id",
                     "data_type": "numeric",
                     "column_name": "Data Breach ID",
@@ -1095,14 +1118,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -1188,6 +1203,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.date_range",
                     "data_type": "string",
                     "column_name": "Data Breach Record Date Range",
@@ -1253,14 +1276,6 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
                     "data_path": "action_result.message",
                     "data_type": "string"
                 },
@@ -1307,6 +1322,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.breach_id",
                     "data_type": "numeric",
                     "column_name": "Data Breach ID",
@@ -1334,14 +1357,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -1401,6 +1416,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.domain_names",
                     "data_type": "string",
                     "column_name": "Data Breach Record Domain Names",
@@ -1448,14 +1471,6 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
                     "data_path": "action_result.message",
                     "data_type": "string"
                 },
@@ -1498,6 +1513,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.breach_record_id",
                     "data_type": "numeric",
                     "column_name": "Breach Record ID Queried",
@@ -1522,14 +1545,6 @@
                         false
                     ],
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
                 },
                 {
                     "data_path": "action_result.message",
@@ -1590,6 +1605,14 @@
             },
             "output": [
                 {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.breach_record_id",
                     "data_type": "numeric",
                     "column_name": "Breach Record ID Queried",
@@ -1624,14 +1647,6 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success",
-                        "failed"
-                    ]
-                },
-                {
                     "data_path": "action_result.message",
                     "data_type": "string"
                 },
@@ -1658,5 +1673,25 @@
             },
             "versions": "EQ(*)"
         }
-    ]
+    ],
+    "pip39_dependencies": {
+        "wheel": [
+            {
+                "module": "anyascii",
+                "input_file": "wheels/py3/anyascii-0.3.0-py3-none-any.whl"
+            },
+            {
+                "module": "certifi",
+                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
+            },
+            {
+                "module": "httplib2",
+                "input_file": "wheels/py3/httplib2-0.20.4-py3-none-any.whl"
+            },
+            {
+                "module": "pyparsing",
+                "input_file": "wheels/py3/pyparsing-3.0.9-py3-none-any.whl"
+            }
+        ]
+    }
 }

@@ -7,7 +7,7 @@ import phantom.app as phantom
 from phantom.action_result import ActionResult
 
 from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_BP_SUBTYPE, DS_DL_SUBTYPE, DS_GET_INCIDENT_SUCCESS,
-                                    DS_INFR_SUBTYPE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, INCIDENT_ID_KEY, SERVICE_ERR_MSG)
+                                    DS_INFR_SUBTYPE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, INCIDENT_ID_KEY, SERVICE_ERROR_MESSAGE)
 from dsapi.service.incident_service import IncidentService
 from exception_handling_functions import ExceptionHandling
 
@@ -21,7 +21,7 @@ class DSIncidentsConnector(object):
         self._connector = connector
 
         config = connector.get_config()
-        self._handle_exception_object = ExceptionHandling()
+        self._handle_exception_object = ExceptionHandling(connector)
         self._ds_api_key = config[DS_API_KEY_CFG]
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]
 
@@ -33,7 +33,7 @@ class DSIncidentsConnector(object):
             incident_service = IncidentService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         incident_id = param['incident_id']
         # validate 'incident_id' action parameter
         ret_val, incident_id = self._handle_exception_object.validate_integer(action_result, incident_id, INCIDENT_ID_KEY)
@@ -69,7 +69,7 @@ class DSIncidentsConnector(object):
             incident_service = IncidentService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         try:
             incident_reviews = incident_service.find_all_reviews(incident_id)
             incident_reviews_total = len(incident_reviews)
@@ -118,7 +118,7 @@ class DSIncidentsConnector(object):
                 date_range_field='published', types=incident_types)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         self._connector.save_progress("incident view: {}".format(incident_view))
         try:
             incident_pages = incident_service.find_all_pages(view=incident_view)
@@ -154,7 +154,7 @@ class DSIncidentsConnector(object):
             incident_service = IncidentService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
 
         incident_id = param.get('incident_id')
         # validate 'incident_id' action parameter

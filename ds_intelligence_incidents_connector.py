@@ -7,7 +7,7 @@ import phantom.app as phantom
 from phantom.action_result import ActionResult
 
 from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_BP_SUBTYPE, DS_DL_SUBTYPE, DS_GET_INTELLIGENCE_INCIDENT_SUCCESS,
-                                    DS_INFR_SUBTYPE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, INTEL_INCIDENT_ID_KEY, SERVICE_ERR_MSG)
+                                    DS_INFR_SUBTYPE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, INTEL_INCIDENT_ID_KEY, SERVICE_ERROR_MESSAGE)
 from dsapi.service.intelligence_incident_service import IntelligenceIncidentService
 from exception_handling_functions import ExceptionHandling
 
@@ -21,7 +21,7 @@ class DSIntelligenceIncidentsConnector(object):
         self._connector = connector
 
         config = connector.get_config()
-        self._handle_exception_object = ExceptionHandling()
+        self._handle_exception_object = ExceptionHandling(connector)
         self._ds_api_key = config[DS_API_KEY_CFG]
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]
 
@@ -32,7 +32,7 @@ class DSIntelligenceIncidentsConnector(object):
             intelligence_incident_service = IntelligenceIncidentService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         intel_incident_id = param['intel_incident_id']
         # validate 'intel_incident_id' action parameter
         ret_val, intel_incident_id = self._handle_exception_object.validate_integer(action_result, intel_incident_id, INTEL_INCIDENT_ID_KEY)
@@ -93,7 +93,7 @@ class DSIntelligenceIncidentsConnector(object):
             intelligence_incident_view = IntelligenceIncidentService.intelligence_incident_ioc_view(types=param_types)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         intel_incident_id = param['intel_incident_id']
         # validate 'intel_incident_id' action parameter
         ret_val, intel_incident_id = self._handle_exception_object.validate_integer(action_result, intel_incident_id, INTEL_INCIDENT_ID_KEY)
@@ -166,7 +166,7 @@ class DSIntelligenceIncidentsConnector(object):
             )
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
         try:
             intelligence_incident_pages = intelligence_incident_service.find_all_pages(view=intelligence_incident_view)
             intelligence_incident_total = len(intelligence_incident_pages)

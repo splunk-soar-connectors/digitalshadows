@@ -12,7 +12,7 @@ from anyascii import anyascii
 from phantom.action_result import ActionResult
 
 from digital_shadows_consts import (DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_BP_SUBTYPE, DS_DL_SUBTYPE, DS_INFR_SUBTYPE,
-                                    DS_POLL_INCIDENT_COMPLETE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, HISTORY_DAYS_INTERVAL_KEY, SERVICE_ERR_MSG)
+                                    DS_POLL_INCIDENT_COMPLETE, DS_PS_SUBTYPE, DS_SMC_SUBTYPE, HISTORY_DAYS_INTERVAL_KEY, SERVICE_ERROR_MESSAGE)
 from dsapi.config.config import ds_api_host
 from dsapi.service.data_breach_record_service import DataBreachRecordService
 from dsapi.service.incident_service import IncidentService
@@ -27,7 +27,7 @@ class DSOnPollConnector(object):
         :param connector: DigitalShadowsConnector
         """
         self._connector = connector
-        self._handle_exception_object = ExceptionHandling()
+        self._handle_exception_object = ExceptionHandling(connector)
         config = connector.get_config()
         self._ds_api_key = config[DS_API_KEY_CFG]
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]
@@ -91,7 +91,7 @@ class DSOnPollConnector(object):
                     self._connector.save_progress("incident req view: {}".format(json.dumps(incident_view, ensure_ascii=False)))
                 except Exception as e:
                     error_message = self._handle_exception_object.get_error_message_from_exception(e)
-                    return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+                    return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
 
                 try:
                     incident_pages = incident_service.find_all_pages(view=incident_view)
@@ -135,7 +135,7 @@ class DSOnPollConnector(object):
                     )
                 except Exception as e:
                     error_message = self._handle_exception_object.get_error_message_from_exception(e)
-                    return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+                    return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
 
                 try:
                     intelligence_incident_pages = intelligence_incident_service.find_all_pages(view=intelligence_incident_view)
