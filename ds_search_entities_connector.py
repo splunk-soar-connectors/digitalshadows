@@ -6,7 +6,7 @@
 import phantom.app as phantom
 from phantom.action_result import ActionResult
 
-from digital_shadows_consts import DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, SERVICE_ERR_MSG
+from digital_shadows_consts import DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, SERVICE_ERROR_MESSAGE
 from dsapi.service.search_entities_service import SearchEntitiesService
 from exception_handling_functions import ExceptionHandling
 
@@ -20,7 +20,7 @@ class DSSearchEntitiesConnector(object):
         self._connector = connector
 
         config = connector.get_config()
-        self._handle_exception_object = ExceptionHandling()
+        self._handle_exception_object = ExceptionHandling(connector)
         self._ds_api_key = config[DS_API_KEY_CFG]
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]
 
@@ -58,7 +58,7 @@ class DSSearchEntitiesConnector(object):
             search_service = SearchEntitiesService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERR_MSG, error_message))
+            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
 
         try:
             search_view = search_service.search_entity_view(dateRange=date_range, query_string=query, types=type)
