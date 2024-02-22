@@ -2,7 +2,7 @@
 # Digital Shadows
 
 Publisher: Digital Shadows Ltd.  
-Connector Version: 2.1.0  
+Connector Version: 2.1.1  
 Product Vendor: Digital Shadows  
 Product Name: Digital Shadows SearchLight  
 Product Version Supported (regex): ".\*"  
