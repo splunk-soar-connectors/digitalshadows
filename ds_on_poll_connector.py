@@ -296,7 +296,7 @@ class DSOnPollConnector(object):
         now = datetime.now()
         artifact = dict()
         artifact['container_id'] = container_id
-        artifact['label'] = ' '
+        artifact['label'] = self._container_label
         artifact['name'] = 'Intelligence Incident details'
         artifact['description'] = 'Details provided by Digital Shadows'
         artifact['severity'] = container_severity
@@ -396,7 +396,7 @@ class DSOnPollConnector(object):
         now = datetime.now()
         artifact = dict()
         artifact['container_id'] = container_id
-        artifact['label'] = ' '
+        artifact['label'] = self._container_label
         artifact['name'] = 'Incident details'
         artifact['description'] = 'Details provided by Digital Shadows'
         artifact['severity'] = container_severity
