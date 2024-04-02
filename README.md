@@ -2,11 +2,11 @@
 # Digital Shadows
 
 Publisher: Digital Shadows Ltd.  
-Connector Version: 2.1.1  
+Connector Version: 2.1.0  
 Product Vendor: Digital Shadows  
 Product Name: Digital Shadows SearchLight  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 6.1.1  
+Minimum Product Version: 5.3.5  
 
 The Digital Shadows SearchLight App allows users to create flexible and dynamic playbooks that fully harness the capabilities provided by the Digital Shadows SearchLight API
 
