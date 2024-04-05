@@ -40,6 +40,10 @@
                 "input_file": "wheels/py3/anyascii-0.3.0-py3-none-any.whl"
             },
             {
+                "module": "certifi",
+                "input_file": "wheels/py3/certifi-2023.7.22-py3-none-any.whl"
+            },
+            {
                 "module": "httplib2",
                 "input_file": "wheels/py3/httplib2-0.20.4-py3-none-any.whl"
             },
@@ -1675,6 +1679,10 @@
             {
                 "module": "anyascii",
                 "input_file": "wheels/py3/anyascii-0.3.0-py3-none-any.whl"
+            },
+            {
+                "module": "certifi",
+                "input_file": "wheels/py3/certifi-2023.7.22-py3-none-any.whl"
             },
             {
                 "module": "httplib2",
