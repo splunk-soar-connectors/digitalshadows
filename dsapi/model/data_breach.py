@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: data_breach.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7,10 +20,25 @@ from .ds_model import DSModel
 
 
 class DataBreach(DSModel):
-
-    def __init__(self, breach_id, title, domain_name, occurred, modified, published,
-                 incident_id, incident_scope, incident_type, incident_severity, incident_title,
-                 domain_count, record_count, source_url, organisation_username_count, payload):
+    def __init__(
+        self,
+        breach_id,
+        title,
+        domain_name,
+        occurred,
+        modified,
+        published,
+        incident_id,
+        incident_scope,
+        incident_type,
+        incident_severity,
+        incident_title,
+        domain_count,
+        record_count,
+        source_url,
+        organisation_username_count,
+        payload,
+    ):
         self._id = breach_id
         self._title = title
         self._domain_name = domain_name
@@ -93,23 +121,26 @@ class DataBreach(DSModel):
         return self._payload
 
     def __str__(self):
-        return 'Username[id={}, domain={}, payload={}]'.format(self.id, self.domain_name, self.payload)
+        return f"Username[id={self.id}, domain={self.domain_name}, payload={self.payload}]"
 
     @classmethod
     def from_json(cls, json):
         cast = DSModel.cast
-        return cls(cast(json.get('id'), int),
-                   json.get('title'),
-                   json.get('domainName'),
-                   json.get('occurred'),
-                   json.get('modified'),
-                   json.get('published'),
-                   cast(json.get('incident').get('id'), int),
-                   json.get('incident').get('scope'),
-                   json.get('incident').get('type'),
-                   json.get('incident').get('severity'),
-                   json.get('incident').get('title'),
-                   cast(json.get('domainCount'), int),
-                   cast(json.get('recordCount'), int),
-                   json.get('sourceUrl'),
-                   cast(json.get('organisationUsernameCount'), int), json)
+        return cls(
+            cast(json.get("id"), int),
+            json.get("title"),
+            json.get("domainName"),
+            json.get("occurred"),
+            json.get("modified"),
+            json.get("published"),
+            cast(json.get("incident").get("id"), int),
+            json.get("incident").get("scope"),
+            json.get("incident").get("type"),
+            json.get("incident").get("severity"),
+            json.get("incident").get("title"),
+            cast(json.get("domainCount"), int),
+            cast(json.get("recordCount"), int),
+            json.get("sourceUrl"),
+            cast(json.get("organisationUsernameCount"), int),
+            json,
+        )

@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: ds_search_entities_connector.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11,8 +24,7 @@ from dsapi.service.search_entities_service import SearchEntitiesService
 from exception_handling_functions import ExceptionHandling
 
 
-class DSSearchEntitiesConnector(object):
-
+class DSSearchEntitiesConnector:
     def __init__(self, connector):
         """
         :param connector: DigitalShadowsConnector
@@ -32,8 +44,8 @@ class DSSearchEntitiesConnector(object):
 
         # type = param.get('types').split(',')
         type = ["CLIENT_INCIDENT", "DATA_BREACH", "AGGREGATE_DATA_BREACH", "INTELLIGENCE", "TECHNICAL_SOURCE", "WEB_SOURCE"]
-        date_range = param.get('date_range')
-        query = param.get('query')
+        date_range = param.get("date_range")
+        query = param.get("query")
         """
         incident_types = param.get('incident_types')
         incident_subtypes = param.get('incident_subtypes')
@@ -58,13 +70,13 @@ class DSSearchEntitiesConnector(object):
             search_service = SearchEntitiesService(self._ds_api_key, self._ds_api_secret_key)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "{0} {1}".format(SERVICE_ERROR_MESSAGE, error_message))
+            return action_result.set_status(phantom.APP_ERROR, f"{SERVICE_ERROR_MESSAGE} {error_message}")
 
         try:
             search_view = search_service.search_entity_view(dateRange=date_range, query_string=query, types=type)
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. {0}".format(error_message))
+            return action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. {error_message}")
         """
         search_view = search_service.search_entity_view(
             types=type, dateRange=date_range, incidentTypes=incident_types, incidentSubtypes=incident_subtypes,
@@ -76,33 +88,27 @@ class DSSearchEntitiesConnector(object):
             blogNames=blog_names, datePeriod=date_period, from_date=start_date,
             until=end_date, query_string=query)
         """
-        self._connector.save_progress("View: {}".format(search_view))
+        self._connector.save_progress(f"View: {search_view}")
         try:
             search_entity_pages = search_service.find_all_pages(view=search_view)
             # self._connector.save_progress("entity: " + str(search_entity_pages))
             entity_total = len(search_entity_pages)
         except StopIteration:
-            error_message = 'No Search Entity objects retrieved from the Digital Shadows API in page groups'
-            return action_result.set_status(phantom.APP_ERROR, "Error Details: {0}".format(error_message))
+            error_message = "No Search Entity objects retrieved from the Digital Shadows API in page groups"
+            return action_result.set_status(phantom.APP_ERROR, f"Error Details: {error_message}")
         except Exception as e:
             error_message = self._handle_exception_object.get_error_message_from_exception(e)
-            return action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. {}".format(error_message))
+            return action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. {error_message}")
         if entity_total > 0:
-            summary = {
-                'entity_count': entity_total,
-                'entity_found': True
-            }
+            summary = {"entity_count": entity_total, "entity_found": True}
             action_result.update_summary(summary)
             for entity_page in search_entity_pages:
                 for entity in entity_page:
                     # self._connector.save_progress("entity payload: " + str(entity.payload))
                     action_result.add_data(entity.payload)
-            action_result.set_status(phantom.APP_SUCCESS, 'String search entities are fetched')
+            action_result.set_status(phantom.APP_SUCCESS, "String search entities are fetched")
         else:
-            summary = {
-                'entity_count': 0,
-                'entity_found': False
-            }
+            summary = {"entity_count": 0, "entity_found": False}
             action_result.update_summary(summary)
-            action_result.set_status(phantom.APP_SUCCESS, 'Entities not found for search string')
+            action_result.set_status(phantom.APP_SUCCESS, "Entities not found for search string")
         return action_result.get_status()

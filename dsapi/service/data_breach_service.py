@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: data_breach_service.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -9,9 +22,8 @@ from .ds_find_service import DSFindService
 
 
 class DataBreachService(DSFindService):
-
     def __init__(self, ds_api_key, ds_api_secret_key, proxy=None):
-        super(DataBreachService, self).__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
+        super().__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
 
     def find_all(self, view=None):
         """
@@ -24,9 +36,7 @@ class DataBreachService(DSFindService):
         if view is None:
             view = DataBreachService.data_breach_view()
 
-        return self._find_all('/api/data-breach',
-                              view,
-                              DataBreach)
+        return self._find_all("/api/data-breach", view, DataBreach)
 
     def find_all_pages(self, view=None):
         """
@@ -39,9 +49,7 @@ class DataBreachService(DSFindService):
         if view is None:
             view = DataBreachService.data_breach_view()
 
-        return self._find_all_pages('/api/data-breach',
-                                    view,
-                                    DataBreach)
+        return self._find_all_pages("/api/data-breach", view, DataBreach)
 
     def find_data_breach_by_id(self, breach_id=None):
         """
@@ -50,34 +58,39 @@ class DataBreachService(DSFindService):
         :param view: Intelligence Incident ID
         :return: Incident Reviews
         """
-        return self._request('/api/data-breach/' + str(breach_id))
+        return self._request("/api/data-breach/" + str(breach_id))
 
     @staticmethod
     @DSBaseService.paginated(size=500)
-    @DSBaseService.sorted('published')
-    def data_breach_view(published='ALL', username=None, domain_names_on_records=None, reposted_credentials=None,
-                         severities=None, statuses=None, alerted=False, minimum_total_records=None,
-                         reverse=None):
+    @DSBaseService.sorted("published")
+    def data_breach_view(
+        published="ALL",
+        username=None,
+        domain_names_on_records=None,
+        reposted_credentials=None,
+        severities=None,
+        statuses=None,
+        alerted=False,
+        minimum_total_records=None,
+        reverse=None,
+    ):
         view = {
-            'filter': {
-                'published': published,
-                'domainNamesOnRecords': [] if domain_names_on_records is None else domain_names_on_records,
-                'repostedCredentials': [] if reposted_credentials is None else reposted_credentials,
-                'severities': [] if severities is None else severities,
-                'statuses': [] if statuses is None else statuses,
-                'alerted': 'true' if alerted else 'false'
+            "filter": {
+                "published": published,
+                "domainNamesOnRecords": [] if domain_names_on_records is None else domain_names_on_records,
+                "repostedCredentials": [] if reposted_credentials is None else reposted_credentials,
+                "severities": [] if severities is None else severities,
+                "statuses": [] if statuses is None else statuses,
+                "alerted": "true" if alerted else "false",
             }
         }
         if username is not None:
-            view['filter']['username'] = username
+            view["filter"]["username"] = username
 
         if minimum_total_records is not None:
-            view['filter']['minimumTotalRecords'] = minimum_total_records
+            view["filter"]["minimumTotalRecords"] = minimum_total_records
 
         if reverse is not None:
-            view['sort'] = {
-                'direction': 'ASCENDING' if reverse else 'DESCENDING',
-                'property': 'published'
-            }
+            view["sort"] = {"direction": "ASCENDING" if reverse else "DESCENDING", "property": "published"}
 
         return view

@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: pipeline_service.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7,18 +20,16 @@ from ..model.pipeline import Pipeline
 from .ds_base_service import DSBaseService
 
 
-class PipelineRange(object):
-
-    THIRTY_DAYS = 'THIRTY_DAYS'
-    TWO_WEEKS = 'TWO_WEEKS'
-    YEAR = 'YEAR'
+class PipelineRange:
+    THIRTY_DAYS = "THIRTY_DAYS"
+    TWO_WEEKS = "TWO_WEEKS"
+    YEAR = "YEAR"
 
 
 class PipelineService(DSBaseService):
-
     def __init__(self, ds_api_key, ds_api_secret_key, proxy=None):
-        self._api_base = '/api/incidents'
-        super(PipelineService, self).__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
+        self._api_base = "/api/incidents"
+        super().__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
 
     def get(self, pipeline_view):
         """
@@ -29,9 +40,7 @@ class PipelineService(DSBaseService):
         :return: Pipeline
         """
         pipeline_range, view = pipeline_view
-        content = self._request('{}/pipeline'.format(self._api_base),
-                                method='POST',
-                                body=view)
+        content = self._request(f"{self._api_base}/pipeline", method="POST", body=view)
         return Pipeline.from_json(content, pipeline_range)
 
     @staticmethod
@@ -48,11 +57,13 @@ class PipelineService(DSBaseService):
         elif pipeline_range == PipelineRange.YEAR:
             date_range = "P1Y"
         else:
-            raise ValueError('Invalid Pipeline Range')
+            raise ValueError("Invalid Pipeline Range")
 
-        return (pipeline_range,
-                {
-                    "filter": {
-                        "dateRange": "{}".format(date_range),
-                    },
-                })
+        return (
+            pipeline_range,
+            {
+                "filter": {
+                    "dateRange": f"{date_range}",
+                },
+            },
+        )

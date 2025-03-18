@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: incident_service.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -11,9 +24,8 @@ from .ds_find_service import DSFindService
 
 
 class IncidentService(DSFindService):
-
     def __init__(self, ds_api_key, ds_api_secret_key, proxy=None):
-        super(IncidentService, self).__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
+        super().__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
 
     def find_all(self, view=None):
         """
@@ -26,9 +38,7 @@ class IncidentService(DSFindService):
         if view is None:
             view = IncidentService.incidents_view()
 
-        return self._find_all('/api/incidents',
-                              view,
-                              Incident)
+        return self._find_all("/api/incidents", view, Incident)
 
     def find_all_pages(self, view=None):
         """
@@ -41,9 +51,7 @@ class IncidentService(DSFindService):
         if view is None:
             view = IncidentService.incidents_view()
 
-        return self._find_all_pages('/api/incidents',
-                                    view,
-                                    Incident)
+        return self._find_all_pages("/api/incidents", view, Incident)
 
     def find_incident_by_id(self, incident_id=None):
         """
@@ -52,7 +60,7 @@ class IncidentService(DSFindService):
         :param view: Incident ID
         :return: Incident data
         """
-        return self._request('/api/incidents/' + str(incident_id))
+        return self._request("/api/incidents/" + str(incident_id))
 
     def find_all_reviews(self, incident_id=None):
         """
@@ -62,7 +70,7 @@ class IncidentService(DSFindService):
         :return: Incident Reviews
         """
 
-        return self._request('/api/incidents/' + str(incident_id) + '/reviews')
+        return self._request("/api/incidents/" + str(incident_id) + "/reviews")
 
     def post_incident_review(self, post_view=None, incident_id=None):
         """
@@ -71,16 +79,34 @@ class IncidentService(DSFindService):
         :param view: Incident ID
         :return: Incident Reviews
         """
-        return self._request_post('/api/incidents/' + str(incident_id) + '/reviews', body=post_view)
+        return self._request_post("/api/incidents/" + str(incident_id) + "/reviews", body=post_view)
 
     @staticmethod
     @DSBaseService.paginated()
-    @DSBaseService.sorted('published')
-    def incidents_view(alerted=False, since='1970-01-01', until=date.today(), date_range_field='occurred', date_range='P30D',
-                       severities=None, statuses=None, tag_operator='AND', tags=None, types=None,
-                       with_content_removed=True, with_feedback=True, with_takedown=True,
-                       without_content_removed=True, without_feedback=True, without_takedown=True,
-                       reverse=False, page_size=500, sort_property='occurred', client_incidents_only=True, identifier=None):
+    @DSBaseService.sorted("published")
+    def incidents_view(
+        alerted=False,
+        since="1970-01-01",
+        until=date.today(),
+        date_range_field="occurred",
+        date_range="P30D",
+        severities=None,
+        statuses=None,
+        tag_operator="AND",
+        tags=None,
+        types=None,
+        with_content_removed=True,
+        with_feedback=True,
+        with_takedown=True,
+        without_content_removed=True,
+        without_feedback=True,
+        without_takedown=True,
+        reverse=False,
+        page_size=500,
+        sort_property="occurred",
+        client_incidents_only=True,
+        identifier=None,
+    ):
         return {
             "filter": {
                 "alerted": "true" if alerted else "false",
@@ -88,7 +114,7 @@ class IncidentService(DSFindService):
                 "dateRangeField": date_range_field,
                 "identifier": "" if identifier is None else identifier,
                 "severities": [] if severities is None else severities,
-                "statuses": ['READ', 'UNREAD', 'CLOSED'] if statuses is None else statuses,
+                "statuses": ["READ", "UNREAD", "CLOSED"] if statuses is None else statuses,
                 "tagOperator": tag_operator,
                 "tags": [] if tags is None else tags,
                 "types": [] if types is None else types,
@@ -103,9 +129,6 @@ class IncidentService(DSFindService):
                 "offset": "0",
                 "size": page_size,
             },
-            "sort": {
-                "direction": "ASCENDING" if reverse else "DESCENDING",
-                "property": sort_property
-            },
-            "subscribed": "false" if client_incidents_only else "true"
+            "sort": {"direction": "ASCENDING" if reverse else "DESCENDING", "property": sort_property},
+            "subscribed": "false" if client_incidents_only else "true",
         }

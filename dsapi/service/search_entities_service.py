@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: search_entities_service.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10,9 +23,8 @@ from .ds_find_service import DSFindService
 
 
 class SearchEntitiesService(DSFindService):
-
     def __init__(self, ds_api_key, ds_api_secret_key, proxy=None):
-        super(SearchEntitiesService, self).__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
+        super().__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
 
     def find_all(self, view=None):
         """
@@ -24,9 +36,7 @@ class SearchEntitiesService(DSFindService):
         if view is None:
             view = SearchEntitiesService.search_entity_view()
 
-        return self._find_all('/api/search',
-                              view,
-                              SearchEntities)
+        return self._find_all("/api/search", view, SearchEntities)
 
     def find_all_pages(self, view=None):
         """
@@ -39,16 +49,33 @@ class SearchEntitiesService(DSFindService):
         if view is None:
             view = SearchEntitiesService.search_entity_view()
 
-        return self._find_all_pages('/api/search',
-                                    view,
-                                    SearchEntities)
+        return self._find_all_pages("/api/search", view, SearchEntities)
 
     @staticmethod
     @DSBaseService.paginated()
-    def search_entity_view(tags=None, types=None, dateRange='P30D', incidentTypes=None, incidentSubtypes=None, incidentSeverities=None,
-                           webPageNetworks=None, forumPostNetworks=None, marketplaceListingNetworks=None, marketplaces=None, chatProtocols=None,
-                           chatServers=None, chatChannels=None, threatLevelTypes=None, webPageSiteCategories=None, forumPostSiteCategories=None,
-                           blogNames=None, reverse=False, page_size=500, sort_property='relevance', query_string=''):
+    def search_entity_view(
+        tags=None,
+        types=None,
+        dateRange="P30D",
+        incidentTypes=None,
+        incidentSubtypes=None,
+        incidentSeverities=None,
+        webPageNetworks=None,
+        forumPostNetworks=None,
+        marketplaceListingNetworks=None,
+        marketplaces=None,
+        chatProtocols=None,
+        chatServers=None,
+        chatChannels=None,
+        threatLevelTypes=None,
+        webPageSiteCategories=None,
+        forumPostSiteCategories=None,
+        blogNames=None,
+        reverse=False,
+        page_size=500,
+        sort_property="relevance",
+        query_string="",
+    ):
         return {
             "filter": {
                 "tags": [] if tags is None else tags,
@@ -67,15 +94,12 @@ class SearchEntitiesService(DSFindService):
                 "threatLevelTypes": [] if threatLevelTypes is None else threatLevelTypes,
                 "webPageSiteCategories": [] if webPageSiteCategories is None else webPageSiteCategories,
                 "forumPostSiteCategories": [] if forumPostSiteCategories is None else forumPostSiteCategories,
-                "blogNames": [] if blogNames is None else blogNames
+                "blogNames": [] if blogNames is None else blogNames,
             },
             "pagination": {
                 "offset": "0",
                 "size": page_size,
             },
-            "sort": {
-                "direction": "ASCENDING" if reverse else "DESCENDING",
-                "property": sort_property
-            },
-            "query": query_string
+            "sort": {"direction": "ASCENDING" if reverse else "DESCENDING", "property": sort_property},
+            "query": query_string,
         }

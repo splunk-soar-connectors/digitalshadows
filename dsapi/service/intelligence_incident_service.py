@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: intelligence_incident_service.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -12,9 +25,8 @@ from .ds_find_service import DSFindService
 
 
 class IntelligenceIncidentService(DSFindService):
-
     def __init__(self, ds_api_key, ds_api_secret_key, proxy=None):
-        super(IntelligenceIncidentService, self).__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
+        super().__init__(ds_api_key, ds_api_secret_key, proxy=proxy)
 
     def find_all(self, view=None):
         """
@@ -27,9 +39,7 @@ class IntelligenceIncidentService(DSFindService):
         if view is None:
             view = IntelligenceIncidentService.intelligence_incidents_view()
 
-        return self._find_all('/api/intel-incidents/find',
-                              view,
-                              IntelligenceIncident)
+        return self._find_all("/api/intel-incidents/find", view, IntelligenceIncident)
 
     def find_all_pages(self, view=None):
         """
@@ -42,9 +52,7 @@ class IntelligenceIncidentService(DSFindService):
         if view is None:
             view = IntelligenceIncidentService.intelligence_incidents_view()
 
-        return self._find_all_pages('/api/intel-incidents',
-                                    view,
-                                    IntelligenceIncident)
+        return self._find_all_pages("/api/intel-incidents", view, IntelligenceIncident)
 
     def find_intel_incident_by_id(self, intel_incident_id=None):
         """
@@ -53,7 +61,7 @@ class IntelligenceIncidentService(DSFindService):
         :param view: Intelligence Incident ID
         :return: Incident Reviews
         """
-        return self._request('/api/intel-incidents/' + str(intel_incident_id))
+        return self._request("/api/intel-incidents/" + str(intel_incident_id))
 
     def find_intel_incident_ioc_by_id(self, intel_incident_id=None, view=None):
         """
@@ -66,15 +74,27 @@ class IntelligenceIncidentService(DSFindService):
         if view is None:
             view = IntelligenceIncidentService.intelligence_incident_ioc_view()
 
-        return self._read_all_pages('/api/intel-incidents/' + str(intel_incident_id) + '/iocs', view, IntelligenceIncidentIoc)
+        return self._read_all_pages("/api/intel-incidents/" + str(intel_incident_id) + "/iocs", view, IntelligenceIncidentIoc)
 
     @staticmethod
     @DSBaseService.paginated()
-    @DSBaseService.sorted('published')
-    def intelligence_incidents_view(since='1970-01-01', until=date.today(), date_range_field='occurred', date_range='P30D',
-                                    severities=None, tag_operator='AND', tags=None, types=None,
-                                    with_feedback=True, without_feedback=True,
-                                    reverse=False, page_size=500, sort_property='occurred', identifier=None):
+    @DSBaseService.sorted("published")
+    def intelligence_incidents_view(
+        since="1970-01-01",
+        until=date.today(),
+        date_range_field="occurred",
+        date_range="P30D",
+        severities=None,
+        tag_operator="AND",
+        tags=None,
+        types=None,
+        with_feedback=True,
+        without_feedback=True,
+        reverse=False,
+        page_size=500,
+        sort_property="occurred",
+        identifier=None,
+    ):
         return {
             "filter": {
                 "identifier": "" if identifier is None else identifier,
@@ -85,33 +105,24 @@ class IntelligenceIncidentService(DSFindService):
                 "tags": [] if tags is None else tags,
                 "types": [] if types is None else types,
                 "withFeedback": "true" if with_feedback else "false",
-                "withoutFeedback": "true" if without_feedback else "false"
+                "withoutFeedback": "true" if without_feedback else "false",
             },
             "pagination": {
                 "offset": "0",
                 "size": page_size,
             },
-            "sort": {
-                "direction": "ASCENDING" if reverse else "DESCENDING",
-                "property": sort_property
-            }
+            "sort": {"direction": "ASCENDING" if reverse else "DESCENDING", "property": sort_property},
         }
 
     @staticmethod
     @DSBaseService.paginated()
-    @DSBaseService.sorted('value')
-    def intelligence_incident_ioc_view(types=None, value=None, reverse=False, page_size=500, sort_property='value'):
+    @DSBaseService.sorted("value")
+    def intelligence_incident_ioc_view(types=None, value=None, reverse=False, page_size=500, sort_property="value"):
         return {
-            "filter": {
-                "types": [] if types is None else types,
-                "value": "" if value is None else value
-            },
+            "filter": {"types": [] if types is None else types, "value": "" if value is None else value},
             "pagination": {
                 "offset": "0",
                 "size": page_size,
             },
-            "sort": {
-                "direction": "ASCENDING" if reverse else "DESCENDING",
-                "property": sort_property
-            }
+            "sort": {"direction": "ASCENDING" if reverse else "DESCENDING", "property": sort_property},
         }
