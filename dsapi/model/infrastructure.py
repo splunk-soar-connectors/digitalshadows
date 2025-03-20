@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: infrastructure.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -7,9 +20,20 @@ from .ds_model import DSModel
 
 
 class Infrastructure(DSModel):
-
-    def __init__(self, id, ip_address, port_number, transport, discovered_open,
-                 incident_id, incident_scope, incident_type, incident_sub_type, incident_severity, incident_title):
+    def __init__(
+        self,
+        id,
+        ip_address,
+        port_number,
+        transport,
+        discovered_open,
+        incident_id,
+        incident_scope,
+        incident_type,
+        incident_sub_type,
+        incident_severity,
+        incident_title,
+    ):
         self._id = id
         self._ip_address = ip_address
         self._port_number = port_number
@@ -67,19 +91,21 @@ class Infrastructure(DSModel):
         return self._incident_title
 
     def __str__(self):
-        return 'Infrastructure[id={}, ipaddress={}, port={}]'.format(self.id, self.ip_address, self.port_number)
+        return f"Infrastructure[id={self.id}, ipaddress={self.ip_address}, port={self.port_number}]"
 
     @classmethod
     def from_json(cls, json):
         cast = DSModel.cast
-        return cls(cast(json.get('id'), int),
-                   json.get('ipAddress'),
-                   json.get('portNumber'),
-                   json.get('transport'),
-                   json.get('discoveredOpen'),
-                   cast(json.get('incident').get('id'), int),
-                   json.get('incident').get('scope'),
-                   json.get('incident').get('type'),
-                   json.get('incident').get('subType'),
-                   json.get('incident').get('severity'),
-                   json.get('incident').get('title'))
+        return cls(
+            cast(json.get("id"), int),
+            json.get("ipAddress"),
+            json.get("portNumber"),
+            json.get("transport"),
+            json.get("discoveredOpen"),
+            cast(json.get("incident").get("id"), int),
+            json.get("incident").get("scope"),
+            json.get("incident").get("type"),
+            json.get("incident").get("subType"),
+            json.get("incident").get("severity"),
+            json.get("incident").get("title"),
+        )

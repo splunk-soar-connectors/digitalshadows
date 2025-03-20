@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: exception_handling_functions.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -5,12 +18,16 @@
 
 import phantom.app as phantom
 
-from digital_shadows_consts import (ERROR_CODE_MESSAGE, ERROR_MESSAGE_UNAVAILABLE, NON_NEGATIVE_INTEGER_MESSAGE, PARSE_ERROR_MESSAGE,
-                                    VALID_INTEGER_MESSAGE)
+from digital_shadows_consts import (
+    ERROR_CODE_MESSAGE,
+    ERROR_MESSAGE_UNAVAILABLE,
+    NON_NEGATIVE_INTEGER_MESSAGE,
+    PARSE_ERROR_MESSAGE,
+    VALID_INTEGER_MESSAGE,
+)
 
 
 class ExceptionHandling:
-
     def __init__(self, connector):
         self.obj = connector
 
@@ -18,7 +35,7 @@ class ExceptionHandling:
         self.obj.error_print(message, dump_object=error)
 
     def get_error_message_from_exception(self, e):
-        """ This method is used to get appropriate error message from the exception.
+        """This method is used to get appropriate error message from the exception.
         :param e: Exception object
         :return: error message
         """
@@ -39,9 +56,9 @@ class ExceptionHandling:
             error_message = ERROR_MESSAGE_UNAVAILABLE
         try:
             if error_code in ERROR_CODE_MESSAGE:
-                error_text = "Error Message: {0}".format(error_message)
+                error_text = f"Error Message: {error_message}"
             else:
-                error_text = "Error Code: {0}. Error Message: {1}".format(error_code, error_message)
+                error_text = f"Error Code: {error_code}. Error Message: {error_message}"
         except:
             error_text = PARSE_ERROR_MESSAGE
         return error_text

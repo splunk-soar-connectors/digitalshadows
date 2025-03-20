@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: ds_lookup_username_connector.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10,8 +23,7 @@ from digital_shadows_consts import DS_API_KEY_CFG, DS_API_SECRET_KEY_CFG, DS_LOO
 from dsapi.service.data_breach_username_service import DataBreachUsernameService
 
 
-class DSLookupUsernameConnector(object):
-
+class DSLookupUsernameConnector:
     def __init__(self, connector):
         """
         :param connector: DigitalShadowsConnector
@@ -26,15 +38,19 @@ class DSLookupUsernameConnector(object):
         action_result = ActionResult(dict(param))
         self._connector.add_action_result(action_result)
 
-        username_to_lookup = param.get('username')
+        username_to_lookup = param.get("username")
 
         username_service = DataBreachUsernameService(self._ds_api_key, self._ds_api_secret_key)
         view = username_service.data_breach_username_view(username=username_to_lookup)
 
-        found_username = next((data_breach_username
-                               for data_breach_username in username_service.find_all(view=view)
-                               if data_breach_username.username == username_to_lookup),
-                              None)
+        found_username = next(
+            (
+                data_breach_username
+                for data_breach_username in username_service.find_all(view=view)
+                if data_breach_username.username == username_to_lookup
+            ),
+            None,
+        )
 
         if found_username is not None:
             summary, data = self._lookup_success(username_to_lookup, found_username)
@@ -57,15 +73,12 @@ class DSLookupUsernameConnector(object):
         :param found_username: DataBreachUsernameSummary
         :return: tuple
         """
-        summary = {
-            'username_queried': username_queried,
-            'username_was_found': True
-        }
+        summary = {"username_queried": username_queried, "username_was_found": True}
         data = {
-            'username_retrieved': found_username.username,
-            'username_was_found': True,
-            'distinct_password_count': found_username.distinct_password_count,
-            'breach_count': found_username.breach_count
+            "username_retrieved": found_username.username,
+            "username_was_found": True,
+            "distinct_password_count": found_username.distinct_password_count,
+            "breach_count": found_username.breach_count,
         }
         return summary, data
 
@@ -76,14 +89,6 @@ class DSLookupUsernameConnector(object):
         :param username_queried: str
         :return: tuple
         """
-        summary = {
-            'username_queried': username_queried,
-            'username_was_found': False
-        }
-        data = {
-            'username_retrieved': '',
-            'username_was_found': False,
-            'distinct_password_count': 0,
-            'breach_count': 0
-        }
+        summary = {"username_queried": username_queried, "username_was_found": False}
+        data = {"username_retrieved": "", "username_was_found": False, "distinct_password_count": 0, "breach_count": 0}
         return summary, data

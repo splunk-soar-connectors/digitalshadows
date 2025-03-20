@@ -1,3 +1,16 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: ds_abstract_service.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
@@ -10,7 +23,7 @@ from httplib2 import Http, ProxyInfo, proxy_info_from_environment, socks
 from dsapi.config.ds_proxy_config import DSProxyConfig
 
 
-class DSAbstractService(object, metaclass=ABCMeta):
+class DSAbstractService(metaclass=ABCMeta):
     """
     Abstract Service that provides http methods to implementing services.
 
@@ -27,7 +40,7 @@ class DSAbstractService(object, metaclass=ABCMeta):
 
         self._http = Http(proxy_info=proxy)
 
-    def _request(self, url, method='GET', body=None, headers=None):
+    def _request(self, url, method="GET", body=None, headers=None):
         return self._http.request(url, method=method, body=body, headers=headers)
 
     def _prepare_proxy(self, ds_proxy_config):
@@ -41,7 +54,7 @@ class DSAbstractService(object, metaclass=ABCMeta):
             DSProxyConfig.Type.HTTP: socks.PROXY_TYPE_HTTP,
             DSProxyConfig.Type.HTTP_NO_TUNNEL: socks.PROXY_TYPE_HTTP_NO_TUNNEL,
             DSProxyConfig.Type.SOCKS4: socks.PROXY_TYPE_SOCKS4,
-            DSProxyConfig.Type.SOCKS5: socks.PROXY_TYPE_SOCKS5
+            DSProxyConfig.Type.SOCKS5: socks.PROXY_TYPE_SOCKS5,
         }
         return ProxyInfo(
             proxy_type=proxy_type_map[ds_proxy_config.proxy_type],
@@ -49,5 +62,5 @@ class DSAbstractService(object, metaclass=ABCMeta):
             proxy_port=ds_proxy_config.proxy_port,
             proxy_rdns=ds_proxy_config.proxy_reverse_dns,
             proxy_user=ds_proxy_config.proxy_user,
-            proxy_pass=ds_proxy_config.proxy_pass
+            proxy_pass=ds_proxy_config.proxy_pass,
         )

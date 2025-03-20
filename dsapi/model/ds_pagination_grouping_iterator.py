@@ -1,9 +1,23 @@
+# Copyright (c) 2025 Splunk Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # File: ds_pagination_grouping_iterator.py
 #
 # Licensed under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.txt)
 #
 
-class DSPaginationGroupingIterator(object):
+
+class DSPaginationGroupingIterator:
     """
     Iterator that will Stream page groups of DSModel objects from the Provider.
 
@@ -30,13 +44,13 @@ class DSPaginationGroupingIterator(object):
         self._page = next(self._provider)
 
     def current_page_offset(self):
-        return int(self._page['current_page']['offset'])
+        return int(self._page["current_page"]["offset"])
 
     def current_page_size(self):
-        return int(self._page['current_page']['size'])
+        return int(self._page["current_page"]["size"])
 
     def __len__(self):
-        return int(self._page['total'])
+        return int(self._page["total"])
 
     def __iter__(self):
         return self
@@ -46,7 +60,7 @@ class DSPaginationGroupingIterator(object):
             self._page = next(self._provider)
 
         ds_model_group = []
-        for ds_model_json in self._page['content']:
+        for ds_model_json in self._page["content"]:
             ds_model_group.append(self._cls.from_json(ds_model_json))
 
         self._page = None
