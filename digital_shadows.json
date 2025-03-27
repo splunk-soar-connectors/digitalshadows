@@ -45,7 +45,7 @@
             },
             {
                 "module": "pyparsing",
-                "input_file": "wheels/py3/pyparsing-3.1.2-py3-none-any.whl"
+                "input_file": "wheels/py3/pyparsing-3.2.3-py3-none-any.whl"
             }
         ]
     },
@@ -1682,7 +1682,7 @@
             },
             {
                 "module": "pyparsing",
-                "input_file": "wheels/py3/pyparsing-3.1.2-py3-none-any.whl"
+                "input_file": "wheels/py3/pyparsing-3.2.3-py3-none-any.whl"
             }
         ]
     }
