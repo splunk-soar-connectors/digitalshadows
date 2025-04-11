@@ -17,38 +17,6 @@
     "logo_dark": "logo_digital_shadows_dark.svg",
     "license": "Copyright (c) 2020-2025 Digital Shadows Ltd.",
     "fips_compliant": false,
-    "pip_dependencies": {
-        "pypi": [
-            {
-                "module": "httplib2"
-            },
-            {
-                "module": "anyascii"
-            }
-        ],
-        "wheel": [
-            {
-                "module": "certifi",
-                "input_file": "wheels/certifi-2021.5.30-py2.py3-none-any.whl"
-            }
-        ]
-    },
-    "pip3_dependencies": {
-        "wheel": [
-            {
-                "module": "anyascii",
-                "input_file": "wheels/py3/anyascii-0.3.0-py3-none-any.whl"
-            },
-            {
-                "module": "httplib2",
-                "input_file": "wheels/py3/httplib2-0.20.4-py3-none-any.whl"
-            },
-            {
-                "module": "pyparsing",
-                "input_file": "wheels/py3/pyparsing-3.1.2-py3-none-any.whl"
-            }
-        ]
-    },
     "configuration": {
         "ds_api_key": {
             "data_type": "string",
@@ -1682,7 +1650,7 @@
             },
             {
                 "module": "pyparsing",
-                "input_file": "wheels/py3/pyparsing-3.1.2-py3-none-any.whl"
+                "input_file": "wheels/py3/pyparsing-3.2.3-py3-none-any.whl"
             }
         ]
     }
