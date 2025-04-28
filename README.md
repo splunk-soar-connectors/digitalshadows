@@ -1,7 +1,7 @@
 # Digital Shadows
 
 Publisher: Digital Shadows Ltd. \
-Connector Version: 2.2.0 \
+Connector Version: 2.2.1 \
 Product Vendor: Digital Shadows \
 Product Name: Digital Shadows SearchLight \
 Minimum Product Version: 6.1.1
