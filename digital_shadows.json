@@ -6,7 +6,7 @@
     "main_module": "digital_shadows_connector.py",
     "app_version": "2.2.1",
     "min_phantom_version": "6.1.1",
-    "python_version": "3",
+    "python_version": ["3.9", "3.13"],
     "utctime_updated": "2025-04-28T20:15:28.669820Z",
     "product_vendor": "Digital Shadows",
     "product_name": "Digital Shadows SearchLight",
