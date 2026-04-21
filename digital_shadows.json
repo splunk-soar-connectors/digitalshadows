@@ -13,9 +13,14 @@
     "product_version_regex": ".*",
     "publisher": "Digital Shadows Ltd.",
     "package_name": "phantom_digital_shadows",
+    "contributors": [
+        {
+            "name": "Daniel Bielech"
+        }
+    ],
     "logo": "logo_digital_shadows.svg",
     "logo_dark": "logo_digital_shadows_dark.svg",
-    "license": "Copyright (c) 2020-2025 Digital Shadows Ltd.",
+    "license": "Copyright (c) 2020-2026 Digital Shadows Ltd.",
     "fips_compliant": false,
     "configuration": {
         "ds_api_key": {
@@ -1650,7 +1655,7 @@
             },
             {
                 "module": "pyparsing",
-                "input_file": "wheels/py3/pyparsing-3.2.3-py3-none-any.whl"
+                "input_file": "wheels/py3/pyparsing-3.3.2-py3-none-any.whl"
             }
         ]
     }

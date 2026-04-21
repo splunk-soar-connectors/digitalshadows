@@ -1,1 +1,2 @@
 **Unreleased**
+* Fixed KeyError in on_poll when incidents omit impactDescription, mitigation, or entitySummary fields (GPB-645108)
