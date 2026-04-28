@@ -1,4 +1,4 @@
-# Copyright (c) 2025 Splunk Inc.
+# Copyright (c) 2025-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -322,25 +322,29 @@ class DSOnPollConnector:
         # artifact['cef']['  Impact'] = intelligence_incident.payload['impactDescription']
         # artifact['cef']['  Mitigation'] = intelligence_incident.payload['mitigation']
         artifact["cef"]["  Summary"] = dict()
-        # artifact['cef']['  Summary'] = intelligence_incident.payload['entitySummary']
-        if "domain" in intelligence_incident.payload["entitySummary"]:
-            # artifact['cef']['  Summary']['domain'] = intelligence_incident.payload['entitySummary']['domain']
-            artifact["cef"]["deviceDnsDomain"] = intelligence_incident.payload["entitySummary"]["domain"]
-        if "contentRemoved" in intelligence_incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["contentRemoved"] = intelligence_incident.payload["entitySummary"]["contentRemoved"]
-        if "source" in intelligence_incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["source"] = intelligence_incident.payload["entitySummary"]["source"]
-        if "sourceDate" in intelligence_incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["sourceDate"] = intelligence_incident.payload["entitySummary"]["sourceDate"]
-        if "summaryText" in intelligence_incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["summaryText"] = intelligence_incident.payload["entitySummary"]["summaryText"]
-        if "type" in intelligence_incident.payload["entitySummary"]:
-            # artifact['cef']['  Summary']['type'] = intelligence_incident.payload['entitySummary']['type']
-            artifact["cef"]["fileType"] = intelligence_incident.payload["entitySummary"]["type"]
 
-        if "dataBreach" in intelligence_incident.payload["entitySummary"]:
-            # artifact['cef']['  Summary']['DataBreach ID'] = intelligence_incident.payload['entitySummary']['dataBreach']['id']
-            artifact["cef"]["deviceExternalId"] = intelligence_incident.payload["entitySummary"]["dataBreach"]["id"]
+        # FIX: Handle missing entitySummary gracefully (GPB-645108)
+        # Some incidents from the Searchlight API do not include this field
+        entity_summary = intelligence_incident.payload.get("entitySummary")
+        if entity_summary:
+            if "domain" in entity_summary:
+                # artifact['cef']['  Summary']['domain'] = entity_summary['domain']
+                artifact["cef"]["deviceDnsDomain"] = entity_summary["domain"]
+            if "contentRemoved" in entity_summary:
+                artifact["cef"]["  Summary"]["contentRemoved"] = entity_summary["contentRemoved"]
+            if "source" in entity_summary:
+                artifact["cef"]["  Summary"]["source"] = entity_summary["source"]
+            if "sourceDate" in entity_summary:
+                artifact["cef"]["  Summary"]["sourceDate"] = entity_summary["sourceDate"]
+            if "summaryText" in entity_summary:
+                artifact["cef"]["  Summary"]["summaryText"] = entity_summary["summaryText"]
+            if "type" in entity_summary:
+                # artifact['cef']['  Summary']['type'] = entity_summary['type']
+                artifact["cef"]["fileType"] = entity_summary["type"]
+            if "dataBreach" in entity_summary:
+                # artifact['cef']['  Summary']['DataBreach ID'] = entity_summary['dataBreach']['id']
+                artifact["cef"]["deviceExternalId"] = entity_summary["dataBreach"]["id"]
+
         artifact["cef"][" Internal"] = intelligence_incident.payload["internal"]
         artifact["cef"][" Restricted"] = intelligence_incident.payload["restrictedContent"]
         artifact["cef"]["Dates"] = dict()
@@ -419,27 +423,33 @@ class DSOnPollConnector:
             # artifact['cef']['  Sub Type'] = incident.payload['subType'].title().replace('_', ' ')
             artifact["cef"]["deviceFacility"] = incident.payload["subType"]
         artifact["cef"]["  Description"] = incident.payload["description"]
-        artifact["cef"]["  Impact"] = incident.payload["impactDescription"]
-        artifact["cef"]["  Mitigation"] = incident.payload["mitigation"]
-        artifact["cef"]["  Summary"] = dict()
-        # artifact['cef']['  Summary'] = incident.payload['entitySummary']
-        if "domain" in incident.payload["entitySummary"]:
-            artifact["cef"]["deviceDnsDomain"] = incident.payload["entitySummary"]["domain"]
-        if "type" in incident.payload["entitySummary"]:
-            artifact["cef"]["fileType"] = incident.payload["entitySummary"]["type"]
-        if "contentRemoved" in incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["contentRemoved"] = incident.payload["entitySummary"]["contentRemoved"]
-        if "source" in incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["source"] = incident.payload["entitySummary"]["source"]
-        if "sourceDate" in incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["sourceDate"] = incident.payload["entitySummary"]["sourceDate"]
-        if "summaryText" in incident.payload["entitySummary"]:
-            artifact["cef"]["  Summary"]["summaryText"] = incident.payload["entitySummary"]["summaryText"]
-        if "type" in incident.payload["entitySummary"]:
-            artifact["cef"]["fileType"] = incident.payload["entitySummary"]["type"]
 
-        if "dataBreach" in incident.payload["entitySummary"]:
-            artifact["cef"]["deviceExternalId"] = incident.payload["entitySummary"]["dataBreach"]["id"]
+        # FIX: Handle optional fields that may be null in newer API responses (GPB-645108)
+        if incident.payload.get("impactDescription"):
+            artifact["cef"]["  Impact"] = incident.payload["impactDescription"]
+        if incident.payload.get("mitigation"):
+            artifact["cef"]["  Mitigation"] = incident.payload["mitigation"]
+
+        artifact["cef"]["  Summary"] = dict()
+
+        # FIX: Handle missing entitySummary gracefully (GPB-645108)
+        # Some incidents from the Searchlight API do not include this field
+        entity_summary = incident.payload.get("entitySummary")
+        if entity_summary:
+            if "domain" in entity_summary:
+                artifact["cef"]["deviceDnsDomain"] = entity_summary["domain"]
+            if "type" in entity_summary:
+                artifact["cef"]["fileType"] = entity_summary["type"]
+            if "contentRemoved" in entity_summary:
+                artifact["cef"]["  Summary"]["contentRemoved"] = entity_summary["contentRemoved"]
+            if "source" in entity_summary:
+                artifact["cef"]["  Summary"]["source"] = entity_summary["source"]
+            if "sourceDate" in entity_summary:
+                artifact["cef"]["  Summary"]["sourceDate"] = entity_summary["sourceDate"]
+            if "summaryText" in entity_summary:
+                artifact["cef"]["  Summary"]["summaryText"] = entity_summary["summaryText"]
+            if "dataBreach" in entity_summary:
+                artifact["cef"]["deviceExternalId"] = entity_summary["dataBreach"]["id"]
 
         if "internal" in incident.payload:
             artifact["cef"][" Internal"] = incident.payload["internal"]
