@@ -1658,5 +1658,21 @@
                 "input_file": "wheels/py3/pyparsing-3.3.2-py3-none-any.whl"
             }
         ]
+    },
+    "pip313_dependencies": {
+        "wheel": [
+            {
+                "module": "anyascii",
+                "input_file": "wheels/py3/anyascii-0.3.0-py3-none-any.whl"
+            },
+            {
+                "module": "httplib2",
+                "input_file": "wheels/py3/httplib2-0.20.4-py3-none-any.whl"
+            },
+            {
+                "module": "pyparsing",
+                "input_file": "wheels/py3/pyparsing-3.3.2-py3-none-any.whl"
+            }
+        ]
     }
 }
