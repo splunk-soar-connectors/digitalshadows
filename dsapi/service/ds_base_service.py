@@ -138,7 +138,7 @@ class DSBaseService(DSAbstractService):
         """
         path = "/api/session-user"
         url = f"{self._url_base}{path}"
-        response, content = super()._request(url, headers=self._headers(with_content_type=False))
+        response, _content = super()._request(url, headers=self._headers(with_content_type=False))
         return int(response["status"]) == 200
 
     @staticmethod

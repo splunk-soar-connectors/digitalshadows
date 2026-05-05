@@ -1,10 +1,10 @@
 # Digital Shadows
 
-Publisher: Digital Shadows Ltd. \
-Connector Version: 2.2.1 \
-Product Vendor: Digital Shadows \
-Product Name: Digital Shadows SearchLight \
-Minimum Product Version: 6.1.1
+Publisher: Digital Shadows Ltd. <br>
+Connector Version: 2.2.1 <br>
+Product Vendor: Digital Shadows <br>
+Product Name: Digital Shadows SearchLight <br>
+Minimum Product Version: 6.3.0
 
 The Digital Shadows SearchLight App allows users to create flexible and dynamic playbooks that fully harness the capabilities provided by the Digital Shadows SearchLight API
 
@@ -28,29 +28,29 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate connection to the Digital Shadows API \
-[on poll](#action-on-poll) - Callback action for the 'on_poll' ingest functionality \
-[search all records](#action-search-all-records) - Search across all Digital Shadow's entities including incidents, threat profiles, and our closed data stores \
-[get incident](#action-get-incident) - Retrieve a single incident and its details, identified by its unique integer identifier \
-[search incidents](#action-search-incidents) - Search incidents based on filters. The On Poll action also uses this endpoint to collect incidents for a given time range/interval \
-[get incident review](#action-get-incident-review) - Retrieve the history of all review submissions for a given incident, ordered by submission time with the most recent submission first \
-[post incident review](#action-post-incident-review) - Post a status update to the incident along with a note \
-[search intelligence incidents](#action-search-intelligence-incidents) - Meant to be a simple way to search Intelligence Incidents based on time range and incident types if needed \
-[get intelligence incident](#action-get-intelligence-incident) - Retrieve a single intelligence incident and its details, identified by its unique integer identifier \
-[get intelligenceincident ioc](#action-get-intelligenceincident-ioc) - Retrieve the indicators of compromise associated with an intelligence incident \
-[search data breaches](#action-search-data-breaches) - Search across all data breaches that are relevant to your organization \
-[get data breach](#action-get-data-breach) - Retrieve a single data breach and its details, identified by its unique integer identifier. The records associated with the breach must be retrieved using a separate operation \
-[search databreach records](#action-search-databreach-records) - Search data breach records across all data breaches. This operation also includes basic information about the data breach the record occurred within \
-[get databreach records](#action-get-databreach-records) - Retrieve breach records (credentials) for a specific breach \
-[get breachrecord byuser](#action-get-breachrecord-byuser) - This action allows you to search breach records based on the domain, review status, or full/partial strings from the username \
-[get breachrecord review](#action-get-breachrecord-review) - Retrieve the list of review status updates for a given data breach record \
+[test connectivity](#action-test-connectivity) - Validate connection to the Digital Shadows API <br>
+[on poll](#action-on-poll) - Callback action for the 'on_poll' ingest functionality <br>
+[search all records](#action-search-all-records) - Search across all Digital Shadow's entities including incidents, threat profiles, and our closed data stores <br>
+[get incident](#action-get-incident) - Retrieve a single incident and its details, identified by its unique integer identifier <br>
+[search incidents](#action-search-incidents) - Search incidents based on filters. The On Poll action also uses this endpoint to collect incidents for a given time range/interval <br>
+[get incident review](#action-get-incident-review) - Retrieve the history of all review submissions for a given incident, ordered by submission time with the most recent submission first <br>
+[post incident review](#action-post-incident-review) - Post a status update to the incident along with a note <br>
+[search intelligence incidents](#action-search-intelligence-incidents) - Meant to be a simple way to search Intelligence Incidents based on time range and incident types if needed <br>
+[get intelligence incident](#action-get-intelligence-incident) - Retrieve a single intelligence incident and its details, identified by its unique integer identifier <br>
+[get intelligenceincident ioc](#action-get-intelligenceincident-ioc) - Retrieve the indicators of compromise associated with an intelligence incident <br>
+[search data breaches](#action-search-data-breaches) - Search across all data breaches that are relevant to your organization <br>
+[get data breach](#action-get-data-breach) - Retrieve a single data breach and its details, identified by its unique integer identifier. The records associated with the breach must be retrieved using a separate operation <br>
+[search databreach records](#action-search-databreach-records) - Search data breach records across all data breaches. This operation also includes basic information about the data breach the record occurred within <br>
+[get databreach records](#action-get-databreach-records) - Retrieve breach records (credentials) for a specific breach <br>
+[get breachrecord byuser](#action-get-breachrecord-byuser) - This action allows you to search breach records based on the domain, review status, or full/partial strings from the username <br>
+[get breachrecord review](#action-get-breachrecord-review) - Retrieve the list of review status updates for a given data breach record <br>
 [post breachrecord review](#action-post-breachrecord-review) - Update an individual breach record's notes or status using this action
 
 ## action: 'test connectivity'
 
 Validate connection to the Digital Shadows API
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -65,7 +65,7 @@ No Output
 
 Callback action for the 'on_poll' ingest functionality
 
-Type: **ingest** \
+Type: **ingest** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -83,7 +83,7 @@ No Output
 
 Search across all Digital Shadow's entities including incidents, threat profiles, and our closed data stores
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -111,7 +111,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve a single incident and its details, identified by its unique integer identifier
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -136,7 +136,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Search incidents based on filters. The On Poll action also uses this endpoint to collect incidents for a given time range/interval
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -164,7 +164,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve the history of all review submissions for a given incident, ordered by submission time with the most recent submission first
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -190,7 +190,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Post a status update to the incident along with a note
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -220,7 +220,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Meant to be a simple way to search Intelligence Incidents based on time range and incident types if needed
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -248,7 +248,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve a single intelligence incident and its details, identified by its unique integer identifier
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -274,7 +274,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve the indicators of compromise associated with an intelligence incident
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -302,7 +302,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Search across all data breaches that are relevant to your organization
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -336,7 +336,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve a single data breach and its details, identified by its unique integer identifier. The records associated with the breach must be retrieved using a separate operation
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -362,7 +362,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Search data breach records across all data breaches. This operation also includes basic information about the data breach the record occurred within
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -398,7 +398,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve breach records (credentials) for a specific breach
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -424,7 +424,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 This action allows you to search breach records based on the domain, review status, or full/partial strings from the username
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -456,7 +456,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Retrieve the list of review status updates for a given data breach record
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -482,7 +482,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Update an individual breach record's notes or status using this action
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters

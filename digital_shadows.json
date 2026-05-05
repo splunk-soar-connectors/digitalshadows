@@ -5,7 +5,7 @@
     "type": "information",
     "main_module": "digital_shadows_connector.py",
     "app_version": "2.2.1",
-    "min_phantom_version": "6.1.1",
+    "min_phantom_version": "6.3.0",
     "python_version": "3",
     "utctime_updated": "2025-04-28T20:15:28.669820Z",
     "product_vendor": "Digital Shadows",
