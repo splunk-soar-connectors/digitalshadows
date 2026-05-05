@@ -5,7 +5,7 @@
     "type": "information",
     "main_module": "digital_shadows_connector.py",
     "app_version": "2.2.1",
-    "min_phantom_version": "6.1.1",
+    "min_phantom_version": "6.3.0",
     "python_version": "3",
     "utctime_updated": "2025-04-28T20:15:28.669820Z",
     "product_vendor": "Digital Shadows",
@@ -13,9 +13,14 @@
     "product_version_regex": ".*",
     "publisher": "Digital Shadows Ltd.",
     "package_name": "phantom_digital_shadows",
+    "contributors": [
+        {
+            "name": "Daniel Bielech"
+        }
+    ],
     "logo": "logo_digital_shadows.svg",
     "logo_dark": "logo_digital_shadows_dark.svg",
-    "license": "Copyright (c) 2020-2025 Digital Shadows Ltd.",
+    "license": "Copyright (c) 2020-2026 Digital Shadows Ltd.",
     "fips_compliant": false,
     "configuration": {
         "ds_api_key": {
@@ -1650,7 +1655,23 @@
             },
             {
                 "module": "pyparsing",
-                "input_file": "wheels/py3/pyparsing-3.2.3-py3-none-any.whl"
+                "input_file": "wheels/py3/pyparsing-3.3.2-py3-none-any.whl"
+            }
+        ]
+    },
+    "pip313_dependencies": {
+        "wheel": [
+            {
+                "module": "anyascii",
+                "input_file": "wheels/py3/anyascii-0.3.0-py3-none-any.whl"
+            },
+            {
+                "module": "httplib2",
+                "input_file": "wheels/py3/httplib2-0.20.4-py3-none-any.whl"
+            },
+            {
+                "module": "pyparsing",
+                "input_file": "wheels/py3/pyparsing-3.3.2-py3-none-any.whl"
             }
         ]
     }

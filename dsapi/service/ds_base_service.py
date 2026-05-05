@@ -1,4 +1,4 @@
-# Copyright (c) 2025 Splunk Inc.
+# Copyright (c) 2025-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -138,7 +138,7 @@ class DSBaseService(DSAbstractService):
         """
         path = "/api/session-user"
         url = f"{self._url_base}{path}"
-        response, content = super()._request(url, headers=self._headers(with_content_type=False))
+        response, _content = super()._request(url, headers=self._headers(with_content_type=False))
         return int(response["status"]) == 200
 
     @staticmethod
