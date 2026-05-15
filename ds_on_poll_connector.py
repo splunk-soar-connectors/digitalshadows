@@ -308,7 +308,7 @@ class DSOnPollConnector:
         artifact["type"] = " "
         artifact["start_time"] = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         artifact["source_data_identifier"] = intelligence_incident.id
-        artifact["run_automation"] = False
+        artifact["run_automation"] = True
         artifact["cef"] = dict()
         artifact["cef"]["externalId"] = intelligence_incident.id
         artifact["cef"]["deviceAddress"] = f"https://portal-digitalshadows.com/client/intelligence/incident/{intelligence_incident.id}"
@@ -412,7 +412,7 @@ class DSOnPollConnector:
         artifact["type"] = " "
         artifact["start_time"] = now.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         artifact["source_data_identifier"] = incident.id
-        artifact["run_automation"] = False
+        artifact["run_automation"] = True
         artifact["cef"] = dict()
         artifact["cef"]["externalId"] = incident.id
         artifact["cef"]["deviceAddress"] = "https://www.portal-digitalshadows.com/client/incidents/{}".format(incident.payload["id"])
