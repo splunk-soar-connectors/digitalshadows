@@ -1,1 +1,2 @@
 **Unreleased**
+* Enabled run_automation on ingested incident and intelligence incident artifacts so SOAR playbooks trigger as expected (GPB-650054)
