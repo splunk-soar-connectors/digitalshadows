@@ -1,1 +1,3 @@
 **Unreleased**
+
+* Removed the Digital Shadows API key from user-visible connectivity progress
