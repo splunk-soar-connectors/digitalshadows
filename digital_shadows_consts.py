@@ -26,7 +26,7 @@ DS_API_SECRET_KEY_CFG = "ds_api_secret_key"  # pragma: allowlist secret
 DS_ACTION_NOT_SUPPORTED = "Action {} not supported"
 
 # Test Connectivity action messages
-DS_TEST_CONNECTIVITY_MESSAGE = "Testing Digital Shadows API Credentials: {}"
+DS_TEST_CONNECTIVITY_MESSAGE = "Testing Digital Shadows API credentials"
 DS_TEST_CONNECTIVITY_MESSAGE_PASS = "Connectivity Test Passed"
 DS_TEST_CONNECTIVITY_MESSAGE_FAIL = "Connectivity Test Failed"
 

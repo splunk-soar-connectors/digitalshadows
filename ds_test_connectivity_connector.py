@@ -41,7 +41,7 @@ class DSTestConnectivityConnector:
         self._ds_api_secret_key = config[DS_API_SECRET_KEY_CFG]
 
     def test_connectivity(self):
-        self._connector.save_progress(DS_TEST_CONNECTIVITY_MESSAGE.format(self._ds_api_key))
+        self._connector.save_progress(DS_TEST_CONNECTIVITY_MESSAGE)
 
         try:
             ds_service = DSBaseService(self._ds_api_key, self._ds_api_secret_key)
